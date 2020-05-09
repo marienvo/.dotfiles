@@ -11,6 +11,7 @@
     - vim-airline/vim-airline 
     - vim-airline/vim-airline-themes
     - junegunn/vim-plug
-- Taskwarrior (sync certificates are saved on MEGAsync)
+- Taskwarrior 
+    - sync certificates are saved on MEGAsync (along with one way backup from work laptop)
 - Shell Clock (GNOME extension)
 
