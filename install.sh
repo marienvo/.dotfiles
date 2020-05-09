@@ -9,3 +9,6 @@ ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
 ln -s ~/.dotfiles/.vimrc ~/.vimrc
 ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+
+# Make shell clock executable
+chmod +x ~/.dotfiles/scripts/shell-clock.sh

@@ -100,7 +100,6 @@ source $ZSH/oh-my-zsh.sh
 
 # custom aliases
 alias wayvpn='sudo openconnect gp_db.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
-alias gtg='/home/marienvanoverbeek/Apps/getting-things-gnome/gtg.sh &'
 
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -112,7 +111,7 @@ export NVM_DIR="$HOME/.nvm"
 
 autoload -U compinit && compinit -u
 
-source ~/Scripts/system/task-aliases.sh
+source ~/.dotfiles/scripts/task-aliases.sh
 
 open () {
 	nautilus "$@" &
