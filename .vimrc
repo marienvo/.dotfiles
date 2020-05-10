@@ -1,6 +1,10 @@
 map <C-u> :source ~/.vimrc<CR>
+
 let g:airline_theme='powerlineish'
 let g:airline_powerline_fonts = 1
+
+set nu rnu
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'

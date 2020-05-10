@@ -5,6 +5,7 @@ rm ~/.zshrc
 rm ~/.vimrc
 rm ~/.tmux.conf
 rm ~/.taskrc
+rm ~/.ideavimrc
 rm -rf ~/.config/nvim
 
 # Create symlinks
@@ -13,5 +14,6 @@ ln -s ~/.dotfiles/.zshrc ~/.zshrc
 ln -s ~/.dotfiles/.vimrc ~/.vimrc
 ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/.dotfiles/.taskrc ~/.taskrc
+ln -s ~/.dotfiles/.ideavimrc ~/.ideavimrc
 mkdir ~/.config/nvim
 ln -s ~/.dotfiles/init.vim ~/.config/nvim/init.vim
