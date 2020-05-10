@@ -1,4 +1,5 @@
 #!/bin/bash
+export EDITOR="/usr/bin/nvim"
 export ZSH="/home/marienvanoverbeek/.oh-my-zsh"
 export ZSH_THEME="spaceship"
 export SPACESHIP_BATTERY_SHOW="false"
@@ -11,6 +12,7 @@ source /home/marienvanoverbeek/.dotfiles/scripts/task-aliases.sh
 alias wayvpn='sudo openconnect gp_db.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
 alias open='xdg-open'
 alias ll='ls -lha'
+alias vim='nvim'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
