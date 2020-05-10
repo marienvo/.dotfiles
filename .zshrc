@@ -1,15 +1,12 @@
+#!/bin/bash
 export ZSH="/home/marienvanoverbeek/.oh-my-zsh"
+export ZSH_THEME="spaceship"
+export SPACESHIP_BATTERY_SHOW="false"
+export plugins=(git)
 
-ZSH_THEME="spaceship"
-SPACESHIP_BATTERY_SHOW="false"
-
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
+source /home/marienvanoverbeek/.oh-my-zsh/oh-my-zsh.sh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Language environment
-# export LANG=en_US.UTF-8
+source /home/marienvanoverbeek/.dotfiles/scripts/task-aliases.sh
 
 alias wayvpn='sudo openconnect gp_db.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
 alias open='xdg-open'
@@ -23,13 +20,11 @@ export NVM_DIR="$HOME/.nvm"
 
 autoload -U compinit && compinit -u
 
-# Something is wrong with this: - it can't be above ^ that nvm stuff? Parse error
-source ~/.dotfiles/scripts/task-aliases.sh
 
 CONTEXT=$(task _get rc.context)
 if [ "$CONTEXT" = "home" ]
 then
-	cd
+	cd || exit
 else
-	cd ~/WebstormProjects/eneco-lift-up/Sources/Solution
+	cd ~/WebstormProjects/eneco-lift-up/Sources/Solution || exit
 fi
