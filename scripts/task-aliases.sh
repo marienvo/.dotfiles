@@ -9,7 +9,6 @@ add () {
 }
 
 alias next="clear && task next"
-alias mod="task modify $@"
 alias start="task start"
 alias done="task done"
 alias sync="task sync"
@@ -19,4 +18,8 @@ alias work="task context work"
 
 note () {
 	task "$1" annotate ${@:2}
+}
+
+mod () {
+	task "$1" modify ${@:2}
 }
