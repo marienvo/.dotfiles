@@ -26,6 +26,9 @@ mod () {
 
 next () {
     clear
+    task logo
+    sleep 0.3
+    clear
     echo "Start of day: check mail, meetings, clean-up (old) todo lists"
     task next
 }
