@@ -13,6 +13,7 @@ alias wayvpn='sudo openconnect gp_db.weareyou.com --protocol=gp --user=marien.va
 alias open='xdg-open'
 alias ll='ls -lha'
 alias vim='nvim'
+alias wiki='nvim ~/Documents/VimWiki/index.wiki'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
