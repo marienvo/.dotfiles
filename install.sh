@@ -1,3 +1,4 @@
+#!/bin/bash
 # Remove existing files
 rm ~/.config/alacritty/alacritty.yml
 rm ~/.zshrc

@@ -9,7 +9,7 @@ alias work="task context work"
 
 add () {
 	CONTEXT=$(task _get rc.context)
-	if [ "$CONTEXT" = "work" ]
+	if [[ "$CONTEXT" = "work" ]]
 	then
 		task add "$@"
 	else
