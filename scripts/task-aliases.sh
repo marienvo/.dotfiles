@@ -1,5 +1,4 @@
 #!/bin/bash
-alias next="clear && task next"
 alias start="task start"
 alias x="task done"
 alias sync="task sync"
@@ -23,4 +22,10 @@ note () {
 
 mod () {
 	task "$1" modify "${@:2}"
+}
+
+next () {
+    clear
+    echo "Start of day: check mail, meetings, clean-up (old) todo lists"
+    task next
 }
