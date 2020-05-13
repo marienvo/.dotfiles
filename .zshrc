@@ -25,9 +25,9 @@ autoload -U compinit && compinit -u
 
 
 CONTEXT=$(task _get rc.context)
-if [ "$CONTEXT" = "home" ]
+if [ "$CONTEXT" = "work" ]
 then
-	cd || exit
-else
 	cd ~/WebstormProjects/eneco-lift-up/Sources/Solution || exit
+else
+    cd || exit
 fi

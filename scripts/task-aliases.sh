@@ -1,11 +1,34 @@
 #!/bin/bash
 alias start="task start"
-alias x="task done"
 alias sync="task sync"
-alias study="task add +home +study"
-alias home="task context home"
-alias work="task context work"
 
+## Add with home context
+alias study="task add +home +study"
+alias book="task add +home +books"
+
+## Switch context
+alias books="task context books && next"
+alias home="task context home && next"
+alias work="task context work && next" # default context
+
+showTaskList () {
+	CONTEXT=$(task _get rc.context)
+    if [ "$CONTEXT" = "work" ]
+    then
+        echo "Start of day: check mail, meetings, clean-up (old) todo lists"
+    elif [ "$CONTEXT" = "books" ]
+    then
+        echo "Books currently reading; keep making notes - keep reading"
+    fi
+
+    task next
+}
+x () {
+    clear
+    task done "$@"
+    echo ''
+    showTaskList
+}
 add () {
 	CONTEXT=$(task _get rc.context)
 	if [[ "$CONTEXT" = "work" ]]
@@ -29,6 +52,5 @@ next () {
     task logo
     sleep 0.3
     clear
-    echo "Start of day: check mail, meetings, clean-up (old) todo lists"
-    task next
+    showTaskList
 }

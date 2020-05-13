@@ -29,8 +29,10 @@ include /usr/share/taskwarrior/dark-blue-256.theme
 #include /usr/share/taskwarrior/solarized-light-256.theme
 #include /usr/share/taskwarrior/no-color.theme
 
-context.home=+home
+# Main contexts
+context.home=+home -books # exclude books, since this list can be big
 context.work=-home
+
 context=work
 taskd.server=freecinc.com:53589
 taskd.key=\/home\/marienvanoverbeek\/.task\/freecinc_fa6858fe.key.pem
@@ -38,3 +40,4 @@ taskd.certificate=\/home\/marienvanoverbeek\/.task\/freecinc_fa6858fe.cert.pem
 taskd.ca=\/home\/marienvanoverbeek\/.task\/freecinc_fa6858fe.ca.pem
 taskd.credentials=FreeCinc\/freecinc_fa6858fe\/e1f46be6-c2ef-4ecd-aebc-01aafe800e60
 context.study=+study
+context.books=+books +home
