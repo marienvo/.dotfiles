@@ -16,12 +16,17 @@ showTaskList () {
     if [ "$CONTEXT" = "work" ]
     then
         echo "Start of day: check mail, meetings, clean-up (old) todo lists"
+        task next
     elif [ "$CONTEXT" = "books" ]
     then
         echo "Books currently reading; keep making notes - keep reading"
+        task books
+    elif [ "$CONTEXT" = "home" ]
+    then
+        echo "Alles in kleine stappen"
+        task next -books # exclude books, since this list can be big
     fi
 
-    task next
 }
 x () {
     clear

@@ -30,7 +30,7 @@ include /usr/share/taskwarrior/dark-blue-256.theme
 #include /usr/share/taskwarrior/no-color.theme
 
 # Main contexts
-context.home=+home -books # exclude books, since this list can be big
+context.home=+home
 context.work=-home
 
 context=work
@@ -41,3 +41,10 @@ taskd.ca=\/home\/marienvanoverbeek\/.task\/freecinc_fa6858fe.ca.pem
 taskd.credentials=FreeCinc\/freecinc_fa6858fe\/e1f46be6-c2ef-4ecd-aebc-01aafe800e60
 context.study=+study
 context.books=+books +home
+uda.progress.type=string
+uda.progress.label=Progress
+report.books.description=Currently reading
+report.books.columns=progress,id,description,urgency
+report.books.labels=%,ID,Description,Urg
+report.books.filter=+home +books
+report.books.sort=urgency-
