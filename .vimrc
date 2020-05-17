@@ -1,5 +1,5 @@
 map <C-u> :source ~/.vimrc<CR>
-imap ;; <Esc>
+imap ,, <Esc>
 
 let g:airline_theme='powerlineish'
 let g:airline_powerline_fonts = 1
