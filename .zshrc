@@ -14,7 +14,7 @@ alias open='xdg-open'
 alias ll='ls -lha'
 alias vim='nvim'
 alias wiki='nvim ~/Documents/VimWiki/index.wiki'
-alias s='cmatrix -s -u 1'
+alias s='cmatrix -s -u 4'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
