@@ -46,5 +46,6 @@ uda.progress.label=Progress
 report.books.description=Currently reading
 report.books.columns=progress,id,description,urgency
 report.books.labels=%,ID,Description,Urg
-report.books.filter=+home +books
+report.books.filter=+home +books status:pending
 report.books.sort=urgency-
+reserved.lines=3
