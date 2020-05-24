@@ -37,3 +37,10 @@ else
     cd || exit
 fi
 source /etc/profile.d/bash_completion.sh
+
+function save () {
+    WD=$(pwd)
+    cd /home/marienvanoverbeek/Documents/VimWiki
+    git add . && git commit -m "save" && git push
+    cd $WD
+}
