@@ -16,7 +16,7 @@ alias vim='nvim'
 alias wiki='nvim ~/Documents/VimWiki/index.wiki'
 
 # Calendar functions:
-alias fetch='/home/marienvanoverbeek/.dotfiles/scripts/fetch-calendars.sh'
+alias fetch='chronic /home/marienvanoverbeek/.dotfiles/scripts/fetch-calendars.sh'
 alias today='calcurse -stoday'
 alias tomorrow='calcurse -stomorrow'
 

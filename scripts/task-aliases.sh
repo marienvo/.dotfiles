@@ -1,6 +1,6 @@
 #!/bin/bash
 alias start="task start"
-alias sync="task sync"
+alias sync="task sync && fetch" # fetch is for ical's
 alias u="task undo"
 
 ## Add with home context (from any context)
