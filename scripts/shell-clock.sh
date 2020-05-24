@@ -16,7 +16,7 @@ _minutesTillNextMeeting () {
     HOURS=${CCHOURS##*( )}
     CCMINS=$(calcurse -n | grep "\["| sed -r 's/\[([0-9]+):([0-9]+)\](.*)/\2/')
     MINUTES=$((${CCMINS##*( )}+(HOURS*60))) # should have leading zeroes
-    if [ "$MINUTES" -gt "59" ]
+    if [ "$MINUTES" -gt "59" ] || [ "$MINUTES" -eq "0" ]
     then
         echo ""
     else
