@@ -1,7 +1,5 @@
 map <C-u> :source ~/.vimrc<CR>
 imap ,, <Esc>
-imap <Tab> <C-t>
-imap <S-Tab> <C-d>
 
 let g:airline_theme='powerlineish'
 let g:airline_powerline_fonts = 1
@@ -21,3 +19,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vimwiki/vimwiki'
 
 call plug#end()
+
+imap <Tab> <C-t>
+imap <S-Tab> <C-d>
+let g:vimwiki_table_mappings=0 "makes sure tabs work as expected in insert mode for vimwiki
