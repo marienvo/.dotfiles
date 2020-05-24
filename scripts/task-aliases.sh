@@ -46,14 +46,7 @@ _inboxNotification () { # private function
     fi
 }
 
-inbox () { # All pending tasks without a project are "INBOX" chronic
-    # Check if inbox has entries (chronic ... &> /dev/null - throw away output if so)
-    # Show inbox if no error
-    # Echo something on error (error because "Noting found", which is good in our case)
-    chronic task next proj: &> /dev/null && task inbox || echo "\e[2mInbox is empty" # chronic from moreutils
-}
-
-showTaskList () {
+_showTaskList () {
 	CONTEXT=$(task _get rc.context)
     if [ "$CONTEXT" = "work" ]
     then
@@ -74,7 +67,7 @@ x () { # Cross of the list / mark done
     clear
     task done "$@"
     echo ''
-    showTaskList
+    _showTaskList
 }
 p () { # Add to project
     task modify $1 "project:$2"
@@ -99,15 +92,11 @@ mod () {
 	task "$1" modify "${@:2}"
 }
 
-next () { # Show any next task, independent of project - only context (work/home)
-    clear
-    task logo
-    sleep 0.3
-    clear
-    showTaskList
-}
-
-list () { # Show a list of all next tasks for a given project
+# Show a list of all next tasks for a given project
+# - There are two options for this command:
+#   - list PROJECT (shows pending tasks, ready to pick up)
+#   - list PROJECT -a (shows all tasks, pending or not)
+list () {
     ARG="$2"
 	if [[ $ARG = "" ]]
     then
@@ -116,4 +105,26 @@ list () { # Show a list of all next tasks for a given project
     then
         task all "proj:$1"
     fi
+}
+
+# Next tasks are things to pick up next
+# - this contains a list of tasks that:
+#   - are ready (not blocked, not waiting)
+next () { # Show any next task, independent of project - only context (work/home)
+    clear
+    task logo
+    sleep 0.3
+    clear
+    _showTaskList
+}
+
+# New tasks are going to the "inbox"
+# - this contains all tasks that:
+#   - don't have a project
+#   - AND are pending (not waiting, not completed, not deleted)
+inbox () { # All pending tasks without a project are "INBOX" chronic
+    # Check if inbox has entries (chronic ... &> /dev/null - throw away output if so)
+    # Show inbox if no error
+    # Echo something on error (error because "Noting found", which is good in our case)
+    chronic task next proj: &> /dev/null && task inbox || echo "\e[2mInbox is empty" # chronic from moreutils
 }
