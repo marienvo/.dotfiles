@@ -9,9 +9,12 @@ fi
 DESCR=$(task _get $ID.description)
 PROJECT=$(task _get $ID.project)
 SEPERATOR='         '
-if [ -n "$DESCR" ]
+if [ -n "$DESCR" ] && [ -n "$PROJECT" ]
 then
-    echo "$(date "+%k:%M")  ∙  $CONTEXT $SEPERATOR #$ID  ∙  $DESCR  ∙  $PROJECT"
+    echo "$(date "+%k:%M")  ∙  $CONTEXT $SEPERATOR $PROJECT #$ID  ∙  $DESCR"
+elif [ -n "$DESCR" ]
+then
+    echo "$(date "+%k:%M")  ∙  $CONTEXT $SEPERATOR #$ID  ∙  $DESCR"
 else
     echo "$(date "+%k:%M")  ∙  $CONTEXT"
 fi
