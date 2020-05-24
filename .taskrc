@@ -48,4 +48,10 @@ report.books.columns=progress,id,description,urgency
 report.books.labels=%,ID,Description,Urg
 report.books.filter=+home +books status:pending
 report.books.sort=urgency-
+
+report.inbox.columns=id,description,entry.age
+report.inbox.labels=ID,Description,Age
+report.inbox.filter=project: status:pending
+report.inbox.sort=entry-
+
 reserved.lines=3
