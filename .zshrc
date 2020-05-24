@@ -47,4 +47,4 @@ function save () {
 
 # Always check inbox on opening new terminal windows
 #  -> they need to get to projects; and/or taken care of immediately
-inbox
+_inboxNotification

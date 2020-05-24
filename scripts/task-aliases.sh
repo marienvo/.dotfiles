@@ -26,16 +26,31 @@ alias books="task context books && next" # sub-context for home
 # tos.daily (mention/discuss at scrum daily 8:45)
 # tos.deleg (delegated tos task)
 
-_showInbox () { # private function
-    echo -e "\e[93mNew tasks: \e[0m\e[2m(do immediately or add to project)"
-    task inbox
+_showInboxCount () { # private function
+    COUNT=$(task count project: status:pending)
+    if [[ "$COUNT" = "1" ]]
+    then
+        echo -e "\e[93mYou have $COUNT new task \e[0m\e[2m(inbox)"
+    else
+        echo -e "\e[93mYou have $COUNT new tasks \e[0m\e[2m(inbox)"
+    fi
+}
+
+_inboxNotification () { # private function
+	CONTEXT=$(task _get rc.context)
+    if [ "$CONTEXT" = "work" ]
+    then
+        chronic task next proj: &> /dev/null && _showInboxCount || echo "\e[2mNo new tasks" # chronic from moreutils
+    else
+        echo "\e[2mHave a great day!"
+    fi
 }
 
 inbox () { # All pending tasks without a project are "INBOX" chronic
     # Check if inbox has entries (chronic ... &> /dev/null - throw away output if so)
     # Show inbox if no error
     # Echo something on error (error because "Noting found", which is good in our case)
-    chronic task next proj: &> /dev/null && _showInbox || echo "\e[2mNo new tasks" # chronic from moreutils
+    chronic task next proj: &> /dev/null && task inbox || echo "\e[2mInbox is empty" # chronic from moreutils
 }
 
 showTaskList () {
