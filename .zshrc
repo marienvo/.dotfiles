@@ -14,6 +14,7 @@ alias open='xdg-open'
 alias ll='ls -lha'
 alias vim='nvim'
 alias wiki='nvim ~/Documents/VimWiki/index.wiki'
+alias fetch='/home/marienvanoverbeek/.dotfiles/scripts/fetch-calendars.sh'
 
 # Screensavers
 alias s='cmatrix'
