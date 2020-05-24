@@ -1,6 +1,8 @@
 #!/bin/bash
 alias start="task start"
 alias sync="task sync"
+alias u="task undo"
+alias inbox="task next proj:" # All pending tasks without a project are "INBOX"
 
 ## Add with home context (from any context)
 alias study="task add +home +study"
@@ -15,7 +17,15 @@ alias home="task context home && next" # main context for home
 alias books="task context books && next" # sub-context for home
 
 ## Work projects
-# here
+# me (just my problem)
+# jira (tickets - can be both ops or tos)
+# docs.xxx (lu, deleg, scrum, repo)
+# eds (design system)
+# ops (task or discuss at meeting)
+# ops.deleg (delegated ops task)
+# tos (task or discuss at meeting)
+# tos.daily (mention/discuss at scrum daily 8:45)
+# tos.deleg (delegated tos task)
 
 showTaskList () {
 	CONTEXT=$(task _get rc.context)
@@ -34,11 +44,16 @@ showTaskList () {
     fi
 
 }
-x () {
+x () { # Cross of the list / mark done
     clear
     task done "$@"
     echo ''
     showTaskList
+}
+p () { # Add to project
+    task modify $1 "project:$2"
+    echo ''
+    task ready "project:$2"
 }
 add () {
 	CONTEXT=$(task _get rc.context)
@@ -58,10 +73,21 @@ mod () {
 	task "$1" modify "${@:2}"
 }
 
-next () {
+next () { # Show any next task, independent of project - only context (work/home)
     clear
     task logo
     sleep 0.3
     clear
     showTaskList
+}
+
+list () { # Show a list of all next tasks for a given project
+    ARG="$2"
+	if [[ $ARG = "" ]]
+    then
+        task next "proj:$1"
+    elif [[ "$ARG" = "-a" ]]
+    then
+        task all "proj:$1"
+    fi
 }

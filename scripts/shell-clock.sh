@@ -7,10 +7,11 @@ fi
 
 # Create output line
 DESCR=$(task _get $ID.description)
+PROJECT=$(task _get $ID.project)
 SEPERATOR='         '
 if [ -n "$DESCR" ]
 then
-    echo "$(date "+%k:%M")  ∙  $CONTEXT $SEPERATOR #$ID  ∙  $DESCR"
+    echo "$(date "+%k:%M")  ∙  $CONTEXT $SEPERATOR #$ID  ∙  $DESCR  ∙  $PROJECT"
 else
     echo "$(date "+%k:%M")  ∙  $CONTEXT"
 fi
