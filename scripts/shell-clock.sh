@@ -28,7 +28,7 @@ _minutesTillNextMeeting () {
 DESCR=$(task _get $ID.description)
 PROJECT=$(task _get $ID.project)
 FREEMINUTES=$(_minutesTillNextMeeting)
-SEPERATOR='         '
+SEPERATOR='    •    '
 if [ -n "$DESCR" ] && [ -n "$PROJECT" ] && [ -n "$FREEMINUTES" ]
 then
     echo "$(date "+%k:%M")  ∙  $CONTEXT  ∙  $FREEMINUTES $SEPERATOR $PROJECT #$ID  ∙  $DESCR"
