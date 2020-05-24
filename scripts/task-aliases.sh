@@ -2,20 +2,26 @@
 alias start="task start"
 alias sync="task sync"
 
-## Add with home context
+## Add with home context (from any context)
 alias study="task add +home +study"
 alias book="task add +home +books"
 
 ## Switch context
-alias books="task context books && next"
-alias home="task context home && next"
+### work (default context, sub-tags: feedback)
 alias work="task context work && next" # default context
+
+### home (sub-tags: books, study)
+alias home="task context home && next" # main context for home
+alias books="task context books && next" # sub-context for home
+
+## Work projects
+# here
 
 showTaskList () {
 	CONTEXT=$(task _get rc.context)
     if [ "$CONTEXT" = "work" ]
     then
-        echo "Start of day: check mail, meetings, clean-up (old) todo lists"
+        echo "Start of day: check mail & meetings"
         task next
     elif [ "$CONTEXT" = "books" ]
     then
