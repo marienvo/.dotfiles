@@ -3,13 +3,13 @@
 # - calcurse -stoday/stomorrow (shows today/tomorrow)
 #
 # todo:
-# - remove URLs from public repo
-# - add script that returns true/false when in a meeting (for use in shell clock)
-#   - should also return true-ish 15 minutes before start of meeting
+# - script that calculates number of minutes until next meeting - just the integer, nothing more (for use in shell clock)
+#   - should return 0 until end of meeting, after that, count until next meeting
+#   - READY? shell clock should show: "15:58 . work . #" OR "IN A MEETING" (instead of next task)
 
 mkdir _tmp && cd _tmp || cd _tmp
 
-# Download calendars
+# Download public busy-calendars
 wget https://outlook.office365.com/owa/calendar/8a28a5fc68ef4c72b17dd73615595a19@eneco.com/8c43e785e09a4db2acf08c702a07229f10973903373350759217/calendar.ics
 wget https://outlook.office365.com/owa/calendar/f8e86bb7b9fe41c38c6469737ff729cb@weareyou.com/039bac4b1f7f49b38595504c720b4bd78740543348176620377/calendar.ics
 
