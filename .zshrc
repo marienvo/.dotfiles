@@ -53,3 +53,14 @@ function save () {
 # Always check inbox on opening new terminal windows
 #  -> they need to get to projects; and/or taken care of immediately
 _inboxNotification
+
+# Functions used by Shell Clock
+function _minutesTillNextMeeting () {
+    HOURS=${$(calcurse -n | grep "\["| sed -r 's/\[([0-9]+):([0-9]+)\](.*)/\1/')##*( )}
+    MINUTES=$((${$(calcurse -n | grep "\["| sed -r 's/\[([0-9]+):([0-9]+)\](.*)/\2/')##*( )}+(HOURS*60)))
+    echo "$MINUTES"
+}
+function _titleOfNextMeeting () {
+    TEXT=${$(calcurse -n | grep "\["| sed -r 's/\[([0-9]+):([0-9]+)\](.*)/\3/')##*( )}
+    echo "$TEXT"
+}

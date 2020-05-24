@@ -3,8 +3,10 @@
 # - calcurse -stoday/stomorrow (shows today/tomorrow)
 #
 # todo:
-# - script that calculates number of minutes until next meeting - just the integer, nothing more (for use in shell clock)
-#   - should return 0 until end of meeting, after that, count until next meeting
+# - add next meeting to shell clock:
+#   - _minutesTillNextMeeting
+#   - _titleOfNextMeeting
+#   - TODO: _currentlyInMeeting??
 #   - READY? shell clock should show: "15:58 . work . #" OR "IN A MEETING" (instead of next task)
 
 mkdir _tmp && cd _tmp || cd _tmp
