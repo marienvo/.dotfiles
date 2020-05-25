@@ -38,9 +38,14 @@ _showInboxCount () { # private function
 
 _inboxNotification () { # private function
 	CONTEXT=$(task _get rc.context)
+	WIKICOUNT=$(wc -l ~/Documents/VimWiki/INBOX.wiki | sed -r  's/^[^0-9]*([0-9]+).*/\1/')
     if [ "$CONTEXT" = "work" ]
     then
         chronic task next proj: &> /dev/null && _showInboxCount || echo "\e[2mNo new tasks" # chronic from moreutils
+        if [ "$WIKICOUNT" -gt "10" ]
+        then
+            echo "\e[93mYou have $WIKICOUNT new lines \e[0m\e[2m(wiki)"
+        fi
     else
         echo "\e[2mHave a great day!"
     fi
