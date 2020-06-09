@@ -112,17 +112,6 @@ list () {
     fi
 }
 
-# Next tasks are things to pick up next
-# - this contains a list of tasks that:
-#   - are ready (not blocked, not waiting)
-next () { # Show any next task, independent of project - only context (work/home)
-    clear
-    task logo
-    sleep 0.3
-    clear
-    _showTaskList
-}
-
 # New tasks are going to the "inbox"
 # - this contains all tasks that:
 #   - don't have a project
@@ -132,4 +121,16 @@ inbox () { # All pending tasks without a project are "INBOX" chronic
     # Show inbox if no error
     # Echo something on error (error because "Noting found", which is good in our case)
     chronic task next proj: &> /dev/null && task inbox || echo "\e[2mInbox is empty" # chronic from moreutils
+}
+
+# Next tasks are things to pick up next
+# - this contains a list of tasks that:
+#   - are ready (not blocked, not waiting)
+next () { # Show any next task, independent of project - only context (work/home)
+    clear
+    task logo
+    sleep 0.3
+    clear
+    _showTaskList
+    inbox
 }
