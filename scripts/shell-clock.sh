@@ -42,3 +42,22 @@ else
     echo "$(date "+%k:%M")  ∙  $CONTEXT"
 fi
 
+# Set light
+CYELLOW="#ff7700"
+CBLUE="#0033ff"
+CGREEN="#55ff00"
+_setWorkLight () {
+	chronic task next proj: && usblamp red || usblamp $CBLUE
+}
+_setHomeLight () {
+	usblamp $CGREEN
+}
+if [ "$CONTEXT" = "books" ] || [ "$CONTEXT" = "home" ]
+then
+    _setHomeLight
+elif [ "$CONTEXT" = "work" ]
+then
+    _setWorkLight
+else
+    usblamp off
+fi
