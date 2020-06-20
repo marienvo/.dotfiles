@@ -50,7 +50,13 @@ _setWorkLight () {
 	chronic task next proj: && usblamp red || usblamp $CBLUE
 }
 _setHomeLight () {
-	usblamp $CGREEN
+	if [ "$(date "+%k")" -gt "21" ]
+	then
+		# Bed time:
+		usblamp red
+	else
+		usblamp $CGREEN
+	fi
 }
 if [ "$CONTEXT" = "books" ] || [ "$CONTEXT" = "home" ]
 then
@@ -59,5 +65,6 @@ elif [ "$CONTEXT" = "work" ]
 then
     _setWorkLight
 else
+    # Invalid context:
     usblamp off
 fi

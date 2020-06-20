@@ -14,6 +14,7 @@ alias open='xdg-open'
 alias ll='ls -lha'
 alias vim='nvim'
 alias wiki='nvim ~/Documents/VimWiki/index.wiki'
+alias signal='signal-cli -u +31650964655'
 
 # Calendar functions:
 alias fetch='chronic /home/marienvanoverbeek/.dotfiles/scripts/fetch-calendars.sh'
@@ -37,7 +38,7 @@ autoload -U compinit && compinit -u
 CONTEXT=$(task _get rc.context)
 if [ "$CONTEXT" = "work" ]
 then
-	cd ~/WebstormProjects/eneco-lift-up/Sources/Solution || exit
+	cd ~/WebstormProjects/eneco-lift-up/Sources/Solution || clear
 else
     cd || exit
 fi
