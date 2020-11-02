@@ -14,6 +14,7 @@ alias open='xdg-open'
 alias ll='ls -lha'
 alias vim='nvim'
 alias wiki='nvim ~/Documents/VimWiki/index.wiki'
+alias fixmock='mv ../Services/ServicesMocks/DC.ServicesMocks/mappings/apiMocks/** ../Services/ServicesMocks/DC.ServicesMocks/mappings/'
 
 # Calendar functions:
 alias fetch='chronic /home/marienvanoverbeek/.dotfiles/scripts/fetch-calendars.sh'
@@ -64,3 +65,4 @@ function _titleOfNextMeeting () {
     TEXT=${$(calcurse -n | grep "\["| sed -r 's/\[([0-9]+):([0-9]+)\](.*)/\3/')##*( )}
     echo "$TEXT"
 }
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

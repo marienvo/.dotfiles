@@ -73,6 +73,7 @@ x () { # Cross of the list / mark done
     task done "$@"
     echo ''
     _showTaskList
+    inbox
 }
 p () { # Add to project
     task modify $1 "project:$2"
