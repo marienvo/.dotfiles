@@ -127,10 +127,14 @@ inbox () { # All pending tasks without a project are "INBOX" chronic
 # - this contains a list of tasks that:
 #   - are ready (not blocked, not waiting)
 next () { # Show any next task, independent of project - only context (work/home)
+    CONTEXT=$(task _get rc.context)
     clear
     task logo
     sleep 0.3
     clear
     _showTaskList
-    inbox
+    if [[ "$CONTEXT" = "work" ]]
+    then
+        inbox
+    fi
 }

@@ -46,8 +46,19 @@ fi
 CYELLOW="#ff7700"
 CBLUE="#0033ff"
 CGREEN="#55ff00"
+CSTATUS="$(cat status.txt)"
 _setWorkLight () {
 	chronic task next proj: && usblamp red || usblamp $CBLUE
+}
+_setWorkAlarm () {
+    if [ "$CSTATUS" = "off" ]
+    then
+        echo "on" > status.txt
+        usblamp red
+    else
+        echo "off" > status.txt
+        usblamp $CBLUE
+    fi
 }
 _setHomeLight () {
 	if [ "$(date "+%k")" -gt "21" ]
@@ -58,6 +69,16 @@ _setHomeLight () {
 		usblamp $CGREEN
 	fi
 }
+_setHomeAlarm () {
+    if [ "$CSTATUS" = "off" ]
+    then
+        echo "on" > status.txt
+        usblamp red
+    else
+        echo "off" > status.txt
+        usblamp $CGREEN
+    fi
+}
 if [ "$CONTEXT" = "books" ] || [ "$CONTEXT" = "home" ]
 then
     _setHomeLight
@@ -66,5 +87,5 @@ then
     _setWorkLight
 else
     # Invalid context:
-    usblamp off
+    usblamp "#ffff00"
 fi
