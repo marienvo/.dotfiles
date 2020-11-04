@@ -33,7 +33,7 @@ include /usr/share/taskwarrior/dark-blue-256.theme
 context.home=+home
 context.work=-home
 
-context=home
+context=work
 taskd.server=freecinc.com:53589
 taskd.key=\/home\/marienvanoverbeek\/.task\/freecinc_fa6858fe.key.pem
 taskd.certificate=\/home\/marienvanoverbeek\/.task\/freecinc_fa6858fe.cert.pem

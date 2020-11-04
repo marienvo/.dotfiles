@@ -14,8 +14,8 @@
 # in Russian :) but works when adjusting the wrapping.
 # Assigned to meta-f in KDE plasma 5
 ######################################################################################################
-NEEDED_WINDOW_CLASS="kruler"
-LAUNCH_PROGRAM="/usr/bin/kruler"
+NEEDED_WINDOW_CLASS="signal.Signal"
+LAUNCH_PROGRAM="flatpak run org.signal.Signal"
 ######################################################################################################
 NEEDED_WINDOW_WINDOW_ID_HEX=`wmctrl -x -l | grep ${NEEDED_WINDOW_CLASS} | awk '{print $1}' | head -n 1`
 NEEDED_WINDOW_WINDOW_ID_DEC=$((${NEEDED_WINDOW_WINDOW_ID_HEX}))
