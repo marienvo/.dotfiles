@@ -16,6 +16,7 @@ alias vim='nvim'
 alias wiki='nvim ~/Documents/VimWiki/index.wiki'
 alias fixmock='mv ../Services/ServicesMocks/DC.ServicesMocks/mappings/apiMocks/** ../Services/ServicesMocks/DC.ServicesMocks/mappings/'
 alias signal='signal-cli -u +31650964655'
+alias weer='curl http://v2.wttr.in/Rotterdam'
 
 # Calendar functions:
 alias fetch='chronic /home/marienvanoverbeek/.dotfiles/scripts/fetch-calendars.sh'
