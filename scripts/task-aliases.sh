@@ -1,6 +1,7 @@
 #!/bin/bash
 alias start="task start"
-alias sync="task sync && fetch" # fetch is for ical's
+alias syncinboxes="unison -batch -ui text \"/home/marienvanoverbeek/Documents/Obsidian/Home/Inbox/\" \"/home/marienvanoverbeek/Documents/Obsidian/Work/Inbox/\""
+alias sync="task sync && syncinboxes && fetch" # fetch is for ical's
 alias u="task undo"
 
 ## Add with home context (from any context)
