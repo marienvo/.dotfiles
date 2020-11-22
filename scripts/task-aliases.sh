@@ -1,6 +1,6 @@
 #!/bin/bash
 alias start="task start"
-alias syncinboxes="unison -batch -ui text \"/home/marienvanoverbeek/Documents/Obsidian/Home/Inbox/\" \"/home/marienvanoverbeek/Documents/Obsidian/Work/Inbox/\""
+alias syncinboxes="unison -batch -ui text \"/home/marienvanoverbeek/Documents/Obsidian/Home/Inbox/\" \"/home/marienvanoverbeek/Documents/Obsidian/Work/Inbox/\" -confirmbigdel=false"
 alias sync="task sync && syncinboxes && fetch" # fetch is for ical's
 alias u="task undo"
 

@@ -91,4 +91,4 @@ else
 fi
 
 # Run scripts every minute
-unison -batch -ui text "/home/marienvanoverbeek/Documents/Obsidian/Home/Inbox/" "/home/marienvanoverbeek/Documents/Obsidian/Work/Inbox/"
+unison -batch -ui text "/home/marienvanoverbeek/Documents/Obsidian/Home/Inbox/" "/home/marienvanoverbeek/Documents/Obsidian/Work/Inbox/" -confirmbigdel=false
