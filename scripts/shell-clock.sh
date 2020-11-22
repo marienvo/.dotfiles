@@ -89,3 +89,6 @@ else
     # Invalid context:
     usblamp "#ffff00"
 fi
+
+# Run scripts every minute
+unison -batch -ui text "/home/marienvanoverbeek/Documents/Obsidian/Home/Inbox/" "/home/marienvanoverbeek/Documents/Obsidian/Work/Inbox/"
