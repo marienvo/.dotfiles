@@ -61,10 +61,14 @@ _setWorkAlarm () {
     fi
 }
 _setHomeLight () {
+    INBOX="/home/marienvanoverbeek/Documents/Obsidian/Home/Inbox"
 	if [ "$(date "+%k")" -gt "21" ]
 	then
 		# Bed time:
 		usblamp red
+    elif [ -n "$(ls -v "$INBOX")" ]
+    then
+        usblamp red
 	else
 		usblamp $CGREEN
 	fi
