@@ -75,6 +75,9 @@ def () { # get definition from dictionary - todo: move to different file
     clear
     curl "dict://dict.org/d:$@"
 }
+short () { # shorten URL - todo: move to different file
+    curl -F"shorten=$@" http://0x0.st
+}
 p () { # Add to project
     task modify $1 "project:$2"
     echo ''
