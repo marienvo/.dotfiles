@@ -71,6 +71,10 @@ x () { # Cross of the list / mark done
     _showTaskList
     inbox
 }
+def () { # get definition from dictionary - todo: move to different file
+    clear
+    curl "dict://dict.org/d:$@"
+}
 p () { # Add to project
     task modify $1 "project:$2"
     echo ''
