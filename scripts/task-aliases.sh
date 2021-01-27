@@ -41,7 +41,8 @@ _inboxNotification () { # private function
 	CONTEXT=$(task _get rc.context)
     if [ "$CONTEXT" = "work" ]
     then
-        chronic task next proj: &> /dev/null && _showInboxCount || echo "\e[2mNo new tasks" # chronic from moreutils
+#         chronic task next proj: &> /dev/null && _showInboxCount || echo "\e[2mNo new tasks" # chronic from moreutils
+        echo "\e[2mNo new tasks"
     else
         echo "\e[2mHave a great day!"
     fi

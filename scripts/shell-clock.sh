@@ -48,7 +48,8 @@ CBLUE="#0033ff"
 CGREEN="#55ff00"
 CSTATUS="$(cat status.txt)"
 _setWorkLight () {
-	chronic task next proj: && usblamp red || usblamp $CBLUE
+# 	chronic task next proj: && usblamp red || usblamp $CBLUE
+    usblamp $CBLUE
 }
 _setWorkAlarm () {
     if [ "$CSTATUS" = "off" ]
