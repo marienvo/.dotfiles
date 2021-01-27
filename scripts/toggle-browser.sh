@@ -16,16 +16,36 @@
 ######################################################################################################
 NEEDED_WINDOW_CLASS="Navigator.Firefox"
 ######################################################################################################
-NEEDED_WINDOW_WINDOW_ID_HEX=`wmctrl -x -l | grep ${NEEDED_WINDOW_CLASS} | awk '{print $1}' | head -n 1`
-NEEDED_WINDOW_WINDOW_ID_DEC=$((${NEEDED_WINDOW_WINDOW_ID_HEX}))
-if [ -z "${NEEDED_WINDOW_WINDOW_ID_HEX}" ]; then
-    echo 'Browser not found'
-else
-    echo "Found window ID:${NEEDED_WINDOW_WINDOW_ID_DEC}(0x${NEEDED_WINDOW_WINDOW_ID_HEX})"
-    ACTIVE_WINDOW_DEC=`xdotool getactivewindow`
-    if [ "${ACTIVE_WINDOW_DEC}" == "${NEEDED_WINDOW_WINDOW_ID_DEC}" ]; then
-        xdotool windowminimize ${NEEDED_WINDOW_WINDOW_ID_DEC}
+NEEDED_WINDOWS_WINDOW_ID_HEX=`wmctrl -x -l | grep ${NEEDED_WINDOW_CLASS} | awk '{print $1}' | head`
+SOME_WINDOW_IS_ACTIVE="false"
+# Read first window
+for HEX in $NEEDED_WINDOWS_WINDOW_ID_HEX
+do
+    FIRST_WINDOW_WINDOW_ID_DEC=$((${HEX}))
+    if [ -z "${HEX}" ]; then
+        echo 'Browser not found'
     else
-        xdotool windowactivate ${NEEDED_WINDOW_WINDOW_ID_DEC}
+        echo "Found window ID:${FIRST_WINDOW_WINDOW_ID_DEC}(0x${HEX})"
+        ACTIVE_WINDOW_DEC=`xdotool getactivewindow`
+        if [ "${ACTIVE_WINDOW_DEC}" == "${FIRST_WINDOW_WINDOW_ID_DEC}" ]; then
+            SOME_WINDOW_IS_ACTIVE="true"
+        fi
     fi
-fi
+done
+
+# Loop through windows
+for HEX in $NEEDED_WINDOWS_WINDOW_ID_HEX
+do
+    NEEDED_WINDOW_WINDOW_ID_DEC=$((${HEX}))
+    if [ -z "${HEX}" ]; then
+        echo 'Browser not found'
+    else
+        echo "Found window ID:${NEEDED_WINDOW_WINDOW_ID_DEC}(0x${HEX})"
+        if [ "${SOME_WINDOW_IS_ACTIVE}" == "true" ]; then
+            xdotool windowminimize ${NEEDED_WINDOW_WINDOW_ID_DEC}
+        else
+            xdotool windowactivate ${NEEDED_WINDOW_WINDOW_ID_DEC}
+        fi
+    fi
+done
+
