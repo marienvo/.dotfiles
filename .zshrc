@@ -68,3 +68,5 @@ function _titleOfNextMeeting () {
     echo "$TEXT"
 }
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fpath=($fpath "/home/marienvanoverbeek/.zfunctions")
+
