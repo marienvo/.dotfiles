@@ -4,14 +4,9 @@
 
 ## To install first (manually)
 
-- Alacritty
 - tmux
     - tmux-themepack
-- nvim
-    - vim-airline/vim-airline 
-    - vim-airline/vim-airline-themes
-    - junegunn/vim-plug
-- Taskwarrior 
-    - sync certificates are saved on MEGAsync (along with one way backup from work laptop)
+- sudo apt install tmux zsh wmctrl xdotool
+- Alacritty
 - Shell Clock (GNOME extension)
 
