@@ -301,6 +301,11 @@ font:
   # window is not focused.
   #unfocused_hollow: true
 
+# Colors (PopOS 2020)
+colors:
+  primary:
+    background: '#232121'
+    foreground: '#eaeaea'
 # Live config reload (changes require restart)
 #live_config_reload: true
 
