@@ -7,6 +7,9 @@
 - tmux
     - tmux-themepack
 - sudo apt install tmux zsh wmctrl xdotool
+- Install oh-my-zsh
+
+## GUI machines
 - Alacritty
 - Shell Clock (GNOME extension)
 
