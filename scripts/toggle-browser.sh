@@ -14,7 +14,7 @@
 # in Russian :) but works when adjusting the wrapping.
 # Assigned to meta-f in KDE plasma 5
 ######################################################################################################
-NEEDED_WINDOW_CLASS="Navigator.Firefox"
+NEEDED_WINDOW_CLASS="brave-browser.Brave-browser"
 ######################################################################################################
 NEEDED_WINDOWS_WINDOW_ID_HEX=`wmctrl -x -l | grep ${NEEDED_WINDOW_CLASS} | awk '{print $1}' | head`
 SOME_WINDOW_IS_ACTIVE="false"
