@@ -13,3 +13,5 @@
 - Alacritty
 - Shell Clock (GNOME extension)
 
+## Tile active state color
+- #B63838
