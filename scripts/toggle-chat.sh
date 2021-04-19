@@ -22,10 +22,10 @@ if [ -z "${NEEDED_WINDOW_WINDOW_ID_HEX}" ]; then
     echo 'Chat not found'
 else
     echo "Found window ID:${NEEDED_WINDOW_WINDOW_ID_DEC}(0x${NEEDED_WINDOW_WINDOW_ID_HEX})"
-    ACTIVE_WINDOW_DEC=`xdotool getactivewindow`
-    if [ "${ACTIVE_WINDOW_DEC}" == "${NEEDED_WINDOW_WINDOW_ID_DEC}" ]; then
-        xdotool windowminimize ${NEEDED_WINDOW_WINDOW_ID_DEC}
-    else
+    # ACTIVE_WINDOW_DEC=`xdotool getactivewindow`
+    # if [ "${ACTIVE_WINDOW_DEC}" == "${NEEDED_WINDOW_WINDOW_ID_DEC}" ]; then
+    #     xdotool windowminimize ${NEEDED_WINDOW_WINDOW_ID_DEC}
+    # else
         xdotool windowactivate ${NEEDED_WINDOW_WINDOW_ID_DEC}
-    fi
+    # fi
 fi

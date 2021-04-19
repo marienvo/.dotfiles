@@ -41,11 +41,11 @@ do
         echo 'Browser not found'
     else
         echo "Found window ID:${NEEDED_WINDOW_WINDOW_ID_DEC}(0x${HEX})"
-        if [ "${SOME_WINDOW_IS_ACTIVE}" == "true" ]; then
-            xdotool windowminimize ${NEEDED_WINDOW_WINDOW_ID_DEC}
-        else
+        # if [ "${SOME_WINDOW_IS_ACTIVE}" == "true" ]; then
+            # xdotool windowminimize ${NEEDED_WINDOW_WINDOW_ID_DEC}
+        # else
             xdotool windowactivate ${NEEDED_WINDOW_WINDOW_ID_DEC}
-        fi
+        # fi
     fi
 done
 
