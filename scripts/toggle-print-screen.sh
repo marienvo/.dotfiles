@@ -24,7 +24,12 @@ ALACRITTY_FOUND=$((${ALACRITTY_WINDOW}))
 ######################################################################################################
 ACTIVE_WINDOW=`xdotool getactivewindow`
 if [ "${ACTIVE_WINDOW}" == "${ALACRITTY_FOUND}" ]; then
+    xdotool windowminimize ${ALACRITTY_FOUND}
     xdotool windowactivate ${FOUND_SLACK}
-else
+fi
+if [ "${ACTIVE_WINDOW}" == "${FOUND_SLACK}" ]; then
+    xdotool windowminimize ${FOUND_SLACK}
+fi
+if [ "${ACTIVE_WINDOW}" != "${ALACRITTY_FOUND}" ] && [ "${ACTIVE_WINDOW}" != "${FOUND_SLACK}" ]; then
     xdotool windowactivate ${ALACRITTY_FOUND}
 fi
