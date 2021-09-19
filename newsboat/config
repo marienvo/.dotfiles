@@ -6,6 +6,7 @@ color listfocus_unread    black   blue        bold
 color info                yellow  black       bold
 color article             green   black
 
+browser "xdg-open %u > /dev/null 2>&1"
 download-path "~/Music/%n"
 player "mp3blaster"
 max-downloads 10
