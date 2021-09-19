@@ -1,0 +1,10 @@
+color background          white   black
+color listnormal          white   black
+color listfocus           yellow  blue   bold
+color listnormal_unread   magenta black
+color listfocus_unread    magenta blue   bold
+color info                yellow  black  bold
+color article             white   black
+
+download-path "~/Music/%n"
+player "mp3blaster"

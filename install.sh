@@ -12,6 +12,8 @@ rm -rf ~/.config/nvim
 # Create symlinks
 ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
 ln -s ~/.dotfiles/config.fish ~/.config/fish/config.fish
+ln -s ~/.dotfiles/newsboat/config ~/.config/newsboat/config
+ln -s ~/.dotfiles/newsboat/urls ~/.config/newsboat/urls
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
 ln -s ~/.dotfiles/.vimrc ~/.vimrc
 ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf

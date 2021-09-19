@@ -8,6 +8,8 @@
     - tmux-themepack
 - sudo apt install tmux zsh wmctrl xdotool
 - Install oh-my-zsh
+- Set global gitignore file:
+  - `git config --global core.excludesFile './.dotfiles/.globalgitignore'`
 
 ## GUI machines
 - Alacritty
