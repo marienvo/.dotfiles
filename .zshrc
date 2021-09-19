@@ -25,8 +25,8 @@ alias tomorrow='calcurse -stomorrow'
 
 # Screensavers
 alias s='cmatrix'
-alias a='asciiquarium'
-alias h='hollywood -q'
+alias news='newsboat'
+alias pod='podboat -a'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
