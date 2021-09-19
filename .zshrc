@@ -36,22 +36,9 @@ export NVM_DIR="$HOME/.nvm"
 
 autoload -U compinit && compinit -u
 
+cd "$(<~/.tmp_marked_working_dir)" || clear
 
-CONTEXT=$(task _get rc.context)
-if [ "$CONTEXT" = "work" ]
-then
-	cd ~/WebstormProjects/eneco-lift-up/Sources/Solution || clear
-else
-    cd || exit
-fi
 source /etc/profile.d/bash_completion.sh
-
-function save () {
-    WD=$(pwd)
-    cd /home/marienvanoverbeek/Documents/VimWiki
-    git add . && git commit -m "save" && git push
-    cd $WD
-}
 
 # Always check inbox on opening new terminal windows
 #  -> they need to get to projects; and/or taken care of immediately
@@ -67,6 +54,6 @@ function _titleOfNextMeeting () {
     TEXT=${$(calcurse -n | grep "\["| sed -r 's/\[([0-9]+):([0-9]+)\](.*)/\3/')##*( )}
     echo "$TEXT"
 }
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fpath=($fpath "/home/marienvanoverbeek/.zfunctions")
 
