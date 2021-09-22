@@ -1,0 +1,42 @@
+{
+	"name": "Vimium C",
+	"@time": "3/23/2021, 5:48:28 PM",
+	"time": 1616518108034,
+	"environment": {
+		"extension": "1.88.2",
+		"platform": "linux"
+	},
+	"keyMappings": [
+		"map <c-`> passNextKey",
+		"mapkey ` <c-[>",
+		""
+	],
+	"nextPatterns": "下一封,下页,下一页,下一章,后一页,next,more,newer,>,›,→,»,≫,>>,volgende,verder,nieuwer,meer",
+	"previousPatterns": "上一封,上页,上一页,上一章,前一页,prev,previous,back,older,<,‹,←,«,≪,<<,vorige,terug,ouder",
+	"searchEngines": [
+		"pr: https://github.com/eneco-online/eneco-lift-up/pulls?q=%s",
+		"emo: https://emojipedia.org/search/?q=%s",
+		"tos: https://jira.eneco.com/browse/TOS2-%s",
+		"ops: https://jira.eneco.com/browse/OPS-%s",
+		"link: https://www.linkedin.com/search/results/all/?keywords=%s",
+		"good: https://www.goodreads.com/search?q=%s",
+		"stack: https://stackoverflow.com/search?q=%s",
+		"g|go|gg|google|Google: https://www.google.com/search?q=%s \\",
+		"  www.google.com re=/^(?:\\.[a-z]{2,4})?\\/search\\b.*?[#&?]q=([^#&]*)/i\\",
+		"g.m|gm|g.map|gmap: https://www.google.com/maps?q=%s \\",
+		"  blank=https://www.google.com/maps Google Maps",
+		"y|yt: https://www.youtube.com/results?search_query=%s \\",
+		"  blank=https://www.youtube.com/ YouTube",
+		"w|wiki: https://www.wikipedia.org/w/index.php?search=%s Wikipedia",
+		"az|amazon: https://www.amazon.de/s/?field-keywords=%s \\",
+		"  blank=https://www.amazon.de/ Amazon",
+		"npo: https://www.npostart.nl/zoeken?term=%s",
+		"gh|github: https://github.com/search?q=$s \\",
+		"  blank=https://github.com/ GitHub Repo",
+		"",
+		"c: vimium://math\\ $S re= Calculate",
+		""
+	],
+	"searchUrl": "https://duckduckgo.com/?q=$s DuckDuckGo",
+	"vimSync": true
+}
