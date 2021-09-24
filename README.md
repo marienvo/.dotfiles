@@ -14,3 +14,7 @@
 ## Other
 - Set cronjob for newsboat to (`crontab -e`):
   - */20 * * * * /usr/bin/newsboat -x reload
+- Vimium C
+  - map p passNextKey
+- Firefox
+  - sync bookmarks with FF account
