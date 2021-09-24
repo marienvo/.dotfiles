@@ -42,7 +42,7 @@ source /etc/profile.d/bash_completion.sh
 
 # Always check inbox on opening new terminal windows
 #  -> they need to get to projects; and/or taken care of immediately
-_inboxNotification
+# _inboxNotification
 
 # Functions used by Shell Clock
 function _minutesTillNextMeeting () {
