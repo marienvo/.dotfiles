@@ -11,9 +11,6 @@
 - Set global gitignore file:
   - `git config --global core.excludesFile './.dotfiles/.globalgitignore'`
 
-## GUI machines
-- Alacritty
-- Shell Clock (GNOME extension)
-
-## Tile active state color
-- #B63838
+## Other
+- Set cronjob for newsboat to (`crontab -e`):
+  - */20 * * * * /usr/bin/newsboat -x reload
