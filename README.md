@@ -8,7 +8,7 @@
   - https://github.com/rpmsphere/noarch/tree/master/r
 - manual install alacritty
   - https://github.com/alacritty/alacritty/blob/master/INSTALL.md
-- sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting gnome-tweaks mp3blaster yubioath-desktop
+- sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop
 - Install via git pull or curl:
   - tmux-themepack
   - oh-my-zsh
