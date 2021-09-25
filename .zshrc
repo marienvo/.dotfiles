@@ -70,7 +70,8 @@ trf() {
     if [ -d "$file" ];
     then file_name="$file_name.zip" ,;
       (cd "$file"&&zip -r -q - .)|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null,&& echo "";
-    else cat "$file"|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null&&echo "";
+    else cat "$file"|curl -s --upload-file "-" "https://transfer.sh/$file_name"&&echo "";
+
     fi;
   else file_name=$1;
     curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null&&echo "";
@@ -79,7 +80,7 @@ trf() {
 
 # Quick upload latest image from Pictures folder (i.e. screenshots)
 function qq () {
-  trf "$(find $HOME/Pictures/ -name "*" -print0 | xargs -r -0 ls -1 -t 2>/dev/null | head -1)"
+  trf "$(find $HOME/Pictures/ -name "*" -print0 | xargs -r -0 ls -1 -t 2>/dev/null | head -1)"| xargs firefox
 }
 
 export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
