@@ -4,6 +4,8 @@
 
 - add repo free & non free (RPM fusion)
   - https://docs.fedoraproject.org/en-US/quick-docs/setup_rpmfusion/
+  - sudo dnf install broadcom-wl (Apple only)
+    - sudo dnf update (then reboot)
 - Download latest rpmsphere-release rpm from
   - https://github.com/rpmsphere/noarch/tree/master/r
 - manual install alacritty
@@ -17,8 +19,6 @@
 - Run `./install.sh` to create symlinks
 
 ## Other
-- Wifi Apple devices
-  - sudo dnf install broadcom-wl
 - install yubico authenticator (alternative if dnf install does not work - might not be needed):
   - https://snapcraft.io/install/yubioath-desktop/fedora
   - sudo systemctl stop pcscd
