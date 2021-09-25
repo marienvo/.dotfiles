@@ -1,13 +1,13 @@
 #!/bin/bash
 export EDITOR="/usr/bin/nvim"
-export ZSH="/home/marienvanoverbeek/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 export ZSH_THEME="spaceship"
 export SPACESHIP_BATTERY_SHOW="false"
 export plugins=(git)
 
-source /home/marienvanoverbeek/.oh-my-zsh/oh-my-zsh.sh
+source $HOME/.oh-my-zsh/oh-my-zsh.sh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /home/marienvanoverbeek/.dotfiles/scripts/task-aliases.sh
+source $HOME/.dotfiles/scripts/task-aliases.sh
 
 alias wayvpn='sudo openconnect gp-db.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls --servercert pin-sha256:Y5ultT1EG3ZMiGQIZIbsqDqqPpjGAFcnrrJlUjcNGWg='
 alias open='xdg-open'
@@ -19,7 +19,7 @@ alias signal='signal-cli -u +31650964655'
 alias weer='curl http://v2.wttr.in/Rotterdam'
 
 # Calendar functions:
-alias fetch='chronic /home/marienvanoverbeek/.dotfiles/scripts/fetch-calendars.sh'
+alias fetch='chronic $HOME/.dotfiles/scripts/fetch-calendars.sh'
 alias today='calcurse -stoday'
 alias tomorrow='calcurse -stomorrow'
 
@@ -32,7 +32,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-[[ -s /home/marienvanoverbeek/.autojump/etc/profile.d/autojump.sh ]] && source /home/marienvanoverbeek/.autojump/etc/profile.d/autojump.sh
+[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit -u
 
@@ -83,4 +83,4 @@ function qq () {
 }
 
 export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-fpath=($fpath "/home/marienvanoverbeek/.zfunctions")
+fpath=($fpath "$HOME/.zfunctions")
