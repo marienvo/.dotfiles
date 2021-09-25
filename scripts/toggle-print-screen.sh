@@ -14,22 +14,15 @@
 # in Russian :) but works when adjusting the wrapping.
 # Assigned to meta-f in KDE plasma 5
 ######################################################################################################
-# todo: context work vs home terugbrengen / bij home element ipv alacrity
-SLACK="slack.Slack"
-ALACRITTY="Alacritty"
-SLACK_WINDOW=`wmctrl -x -l | grep ${SLACK} | awk '{print $1}' | head -n 1`
-ALACRITTY_WINDOW=`wmctrl -x -l | grep ${ALACRITTY} | awk '{print $1}' | head -n 1`
-FOUND_SLACK=$((${SLACK_WINDOW}))
-ALACRITTY_FOUND=$((${ALACRITTY_WINDOW}))
-######################################################################################################
-ACTIVE_WINDOW=`xdotool getactivewindow`
-if [ "${ACTIVE_WINDOW}" == "${ALACRITTY_FOUND}" ]; then
-    xdotool windowminimize ${ALACRITTY_FOUND}
-    xdotool windowactivate ${FOUND_SLACK}
+
+ps cax|grep alacritty
+if [ $? -eq 0 ]; then
+  PID=`ps cax|grep alacritty | grep -o '^[ ]*[0-9]*'`
+  echo "Process is already running [$PID]"
+  kill -1 $PID && alacritty
+else
+  alacritty
 fi
-if [ "${ACTIVE_WINDOW}" == "${FOUND_SLACK}" ]; then
-    xdotool windowminimize ${FOUND_SLACK}
-fi
-if [ "${ACTIVE_WINDOW}" != "${ALACRITTY_FOUND}" ] && [ "${ACTIVE_WINDOW}" != "${FOUND_SLACK}" ]; then
-    xdotool windowactivate ${ALACRITTY_FOUND}
-fi
+
+# todo: uitzoeken waarom wmctrl niet lekker werkt met Firefox, Alacritty? Iets met wayland of 64 bit vs 32?
+# for now use alt+Z: https://extensions.gnome.org/extension/3942/toggle-alacritty/
