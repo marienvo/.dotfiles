@@ -4,5 +4,5 @@ if [ $? -eq 0 ]; then
   PID=`ps cax|grep peek | grep -o '^[ ]*[0-9]*'`
   echo "Process is already running [$PID]"
 else
-  peek
+  flatpak run com.uploadedlobster.peek
 fi
