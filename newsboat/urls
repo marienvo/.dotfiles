@@ -27,6 +27,7 @@ ____________________________________fun_PODCAST
 https://thebinarytimes.net/rss-mp3.xml PODCAST fun
 ___________________________________work_YOUTUBE
 https://www.youtube.com/feeds/videos.xml?channel_id=UCCfqyGl3nq_V0bo64CjZh8g YOUTUBE work
+https://siftrss.com/f/qjvor9v1eg
 __________________________________money_YOUTUBE
 https://www.youtube.com/feeds/videos.xml?channel_id=UCQQ_fGcMDxlKre3SEqEWrLA YOUTUBE money
 https://www.youtube.com/feeds/videos.xml?channel_id=UCCKpicnIwBP3VPxBAZWDeNA YOUTUBE money
@@ -64,3 +65,4 @@ https://davidwalsh.name/feed work BLOG
 https://daily-dev-tips.com/sitemap.xml work BLOG
 https://overreacted.io/rss.xml work BLOG
 https://jakearchibald.com/posts.rss work BLOG
+__need_filter?_try_siftrss.com__
