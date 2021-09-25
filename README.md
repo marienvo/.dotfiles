@@ -18,3 +18,11 @@
   - map p passNextKey
 - Firefox
   - sync bookmarks with FF account
+- Wifi Apple devices
+  - https://docs.fedoraproject.org/en-US/quick-docs/setup_rpmfusion/ - add repo
+  - sudo dnf install broadcom-wl
+- install yubico authenticator
+  - https://snapcraft.io/install/yubioath-desktop/fedora
+  - sudo systemctl stop pcscd
+  - sudo systemctl stop pcscd.socket
+  - sudo snap restart yubioath-desktop.pcscd
