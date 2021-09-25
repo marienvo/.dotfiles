@@ -19,11 +19,6 @@
 - Run `./install.sh` to create symlinks
 
 ## Other
-- install yubico authenticator (alternative if dnf install does not work - might not be needed):
-  - https://snapcraft.io/install/yubioath-desktop/fedora
-  - sudo systemctl stop pcscd
-  - sudo systemctl stop pcscd.socket
-  - sudo snap restart yubioath-desktop.pcscd
 - Set cronjob for newsboat to (`crontab -e`):
   - */20 * * * * /usr/bin/newsboat -x reload
 - Firefox
