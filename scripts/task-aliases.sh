@@ -13,7 +13,6 @@ alias book="task add +home +books"
 alias work="task context work && next" # default context
 
 ### home (sub-tags: books, study)
-alias home="task context home && next" # main context for home
 alias books="task context books && next" # sub-context for home
 
 ## Work projects
