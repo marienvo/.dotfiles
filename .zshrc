@@ -55,32 +55,32 @@ function _titleOfNextMeeting () {
     echo "$TEXT"
 }
 
-trf() {
-  if [ $# -eq 0 ];
-  then echo "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>">&2;
-    return 1;
-  fi;
-  if tty -s;
-    then file="$1";
-    file_name=$(basename "$file");
-    if [ ! -e "$file" ];
-    then echo "$file: No such file or directory">&2;
-      return 1;
-    fi;
-    if [ -d "$file" ];
-    then file_name="$file_name.zip" ,;
-      (cd "$file"&&zip -r -q - .)|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null,&& echo "";
-    else cat "$file"|curl -s --upload-file "-" "https://transfer.sh/$file_name"&&echo "";
+rawurlencode() {
+  local string="${1}"
+  local strlen=${#string}
+  local encoded=""
+  local pos c o
 
-    fi;
-  else file_name=$1;
-    curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null&&echo "";
-  fi;
+  for (( pos=0 ; pos<strlen ; pos++ )); do
+     c=${string:$pos:1}
+     case "$c" in
+        [-_.~a-zA-Z0-9] ) o="${c}" ;;
+        * )               printf -v o '%%%02x' "'$c"
+     esac
+     encoded+="${o}"
+  done
+  echo "${encoded}"    # You can either set a return variable (FASTER)
+  REPLY="${encoded}"   #+or echo the result (EASIER)... or both... :p
+}
+function transfer () {
+    file="$1"
+    file_name=$(basename "$file" | sed -f ~/.dotfiles/url_escape.sed);
+    cat "$file"|curl -s --upload-file "-" "http://cloud.marienvanoverbeek.nl/$file_name"&&echo "";
 }
 
 # Quick upload latest image from Pictures folder (i.e. screenshots)
 function qq () {
-  trf "$(find $HOME/Pictures/ -name "*" -print0 | xargs -r -0 ls -1 -t 2>/dev/null | head -1)"| xargs firefox
+    transfer "$(find $HOME/Pictures/ -name "*" -print0 | xargs -r -0 ls -1 -t 2>/dev/null | head -1)"| xargs firefox
 }
 
 export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
