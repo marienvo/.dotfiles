@@ -76,15 +76,20 @@ rawurlencode() {
   REPLY="${encoded}"   #+or echo the result (EASIER)... or both... :p
 }
 function transfer () {
+#     cloud_url="http://cloud.marienvanoverbeek.nl"
+    cloud_url="http://localhost:8080"
     file="$1"
     file_name=$(basename "$file" | sed -f ~/.dotfiles/url_escape.sed);
-    cat "$file"|curl -s --upload-file "-" "http://cloud.marienvanoverbeek.nl/$file_name"&&echo "";
+#    echo $file_name
+     cat "$file"|curl -s --upload-file "-" "$cloud_url/$file_name"&&echo "";
 }
 
 # Quick upload latest image from Pictures folder (i.e. screenshots)
 function qq () {
-    transfer "$(find $HOME/Pictures/ -name "*" -print0 | xargs -r -0 ls -1 -t 2>/dev/null | head -1)"| xargs firefox
+    transfer "$(find $HOME/Pictures/ -name "*" -print0 | xargs -r -0 ls -1 -t 2>/dev/null | head -1)"
+    ##| xargs firefox
 }
 
 export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH=$PATH:$(go env GOPATH)/bin
 fpath=($fpath "$HOME/.zfunctions")
