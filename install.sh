@@ -30,3 +30,6 @@ ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 
 #mkdir ~/.config/nvim
 #ln -s ~/.dotfiles/init.vim ~/.config/nvim/init.vim
+
+# fix for snap (Fedora)
+sudo ln -s /var/lib/snapd/snap /snap
