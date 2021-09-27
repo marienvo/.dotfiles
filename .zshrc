@@ -90,6 +90,6 @@ function qq () {
     ##| xargs firefox
 }
 
-export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin
 fpath=($fpath "$HOME/.zfunctions")
