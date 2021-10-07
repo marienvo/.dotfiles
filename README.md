@@ -11,7 +11,6 @@
 - manual install alacritty
   - https://github.com/alacritty/alacritty/blob/master/INSTALL.md
 - sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop nodejs snapd
-- sudo dnf copr enable elxreno/preload -y && sudo dnf install preload -y
 - Install via git pull or curl:
   - tmux-themepack
   - oh-my-zsh
