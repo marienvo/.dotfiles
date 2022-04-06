@@ -9,7 +9,7 @@ source $HOME/.oh-my-zsh/oh-my-zsh.sh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.dotfiles/scripts/task-aliases.sh
 
-alias wayvpn='sudo openconnect gp-db.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls --servercert pin-sha256:Y5ultT1EG3ZMiGQIZIbsqDqqPpjGAFcnrrJlUjcNGWg='
+alias wayvpn='sudo openconnect gp.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
 alias open='xdg-open'
 alias ll='ls -lha'
 alias vim='nvim'
