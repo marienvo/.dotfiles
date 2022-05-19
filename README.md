@@ -28,7 +28,7 @@
 
 ## Other
 - Install Jetbrains toolbox via https://www.jetbrains.com/toolbox-app/
-- Install Peek, and configue as default printscreen
+- Install Peek, and configure as default printscreen
 - Brave add sync code
 - Vimium C
   - map p passNextKey
