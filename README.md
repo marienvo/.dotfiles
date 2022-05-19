@@ -14,6 +14,8 @@
 - `sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop nodejs snapd golang-bin ffmpeg`
 - `sudo snap install yubioath-desktop newsboat`
 - `sudo usermod --shell /bin/zsh marienvanoverbeek`
+- Setup newsboat
+  - `ln -s /home/marienvanoverbeek/.dotfiles/newsboat/urls  /home/marienvanoverbeek/snap/newsboat/5842/.newsboat/urls` (target path might be different, run newsboat to check first)
 - Install via git pull or curl:
   - tmux-themepack
   - oh-my-zsh
