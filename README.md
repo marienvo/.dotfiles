@@ -12,7 +12,7 @@
 - Manually install Alacritty (deps first, then `cargo install alacritty`)
   - https://github.com/alacritty/alacritty/blob/master/INSTALL.md
 - `sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop nodejs snapd golang-bin ffmpeg`
-- `sudo snap install yubioath-desktop`
+- `sudo snap install yubioath-desktop newsboat`
 - `sudo usermod --shell /bin/zsh marienvanoverbeek`
 - Install via git pull or curl:
   - tmux-themepack
