@@ -28,7 +28,7 @@
 ## Other
 - Install Jetbrains toolbox via https://www.jetbrains.com/toolbox-app/
 - Install Peek, and configure as default **Print** hotkey
-- set alt-z shortkey for `/home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh`
+- set **alt-z** hotkey for `/home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh`
 - Brave add sync code
 - Vimium C
   - map p passNextKey
