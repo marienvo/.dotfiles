@@ -30,6 +30,6 @@
 - Install Peek, and configure as default **Print** hotkey
 - Set **alt-z** hotkey for `/home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh`
 - Brave
--   add sync code
+  - Add sync code
   - Vimium C: `map p passNextKey`
 
