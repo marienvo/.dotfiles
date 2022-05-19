@@ -3,8 +3,8 @@
 ## To install first (manually)
 
 - (Apple only)
-  - sudo dnf install broadcom-wl (Apple only)
-    - sudo dnf update (then reboot)
+  - `sudo dnf install broadcom-wl`
+    - `sudo dnf update` (then reboot)
 - Download latest rpmsphere-release rpm from
   - https://github.com/rpmsphere/noarch/tree/master/r
 - `flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
