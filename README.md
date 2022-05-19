@@ -14,6 +14,7 @@
 - Install via git pull or curl:
   - tmux-themepack
   - oh-my-zsh
+  - set zsh as default shell?
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
 - Run `./install.sh` to create symlinks
