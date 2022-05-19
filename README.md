@@ -18,7 +18,6 @@
   - tmux-themepack
   - oh-my-zsh
   - https://spaceship-prompt.sh/getting-started/ (use the oh-my-zsh instructions)
-- set alt-z shortkey for `/home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh`
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
   
@@ -28,7 +27,8 @@
 
 ## Other
 - Install Jetbrains toolbox via https://www.jetbrains.com/toolbox-app/
-- Install Peek, and configure as default printscreen
+- Install Peek, and configure as default **Print** hotkey
+- set alt-z shortkey for `/home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh`
 - Brave add sync code
 - Vimium C
   - map p passNextKey
