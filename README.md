@@ -11,7 +11,7 @@
 - `sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm`
 - manual install alacritty (deps first, then cargo install)
   - https://github.com/alacritty/alacritty/blob/master/INSTALL.md
-- sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop nodejs snapd golang-bin
+- sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop nodejs snapd golang-bin ffmpeg
 - sudo snap install yubioath-desktop
 - `sudo usermod --shell /bin/zsh marienvanoverbeek`
 - Install via git pull or curl:
