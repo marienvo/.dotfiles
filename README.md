@@ -16,6 +16,8 @@
 - `sudo usermod --shell /bin/zsh marienvanoverbeek`
 - Setup newsboat
   - `ln -s /home/marienvanoverbeek/.dotfiles/newsboat/urls  /home/marienvanoverbeek/snap/newsboat/5842/.newsboat/urls` (target path might be different, run newsboat to check first)
+  - sync feeds??
+  - set colors??
 - Install via git pull or curl:
   - tmux-themepack
   - oh-my-zsh
