@@ -18,7 +18,7 @@
   - tmux-themepack
   - oh-my-zsh
   - https://spaceship-prompt.sh/getting-started/ (use the oh-my-zsh instructions)
-- set alt-z shortkey for terminal toggle?
+- set alt-z shortkey for /home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
 - Run `./install.sh` to create symlinks
