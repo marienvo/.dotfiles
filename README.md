@@ -17,7 +17,7 @@
 - Install via git pull or curl:
   - tmux-themepack
   - oh-my-zsh
-  - https://github.com/pecigonzalo/spaceship-zsh-theme - hoe?
+  - https://spaceship-prompt.sh/getting-started/ (use the oh-my-zsh instructions)
 - set alt-z shortkey for terminal toggle?
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
