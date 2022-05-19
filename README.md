@@ -21,6 +21,9 @@
 - set alt-z shortkey for /home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
+  
+## Run installer
+
 - Run `./install.sh` to create symlinks
 
 ## Other
