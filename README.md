@@ -16,6 +16,7 @@
   - oh-my-zsh
   - https://github.com/pecigonzalo/spaceship-zsh-theme - hoe?
   - set zsh as default shell?
+- set alt-z shortkey for terminal toggle?
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
 - Run `./install.sh` to create symlinks
