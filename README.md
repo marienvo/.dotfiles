@@ -14,7 +14,7 @@
 - Install via git pull or curl:
   - tmux-themepack
   - oh-my-zsh
-  - https://github.com/pecigonzalo/spaceship-zsh-theme
+  - https://github.com/pecigonzalo/spaceship-zsh-theme - hoe?
   - set zsh as default shell?
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
