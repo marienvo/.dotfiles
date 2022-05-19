@@ -27,10 +27,8 @@
 - Run `./install.sh` to create symlinks
 
 ## Other
-- Set cronjob for newsboat to (`crontab -e`):
-  - */20 * * * * /usr/bin/newsboat -x reload
-- Firefox
-  - sync bookmarks with FF account
+- Install Jetbrains toolbox via https://www.jetbrains.com/toolbox-app/
+- Brave add sync code
 - Vimium C
   - map p passNextKey
 
