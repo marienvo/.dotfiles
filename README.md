@@ -2,8 +2,7 @@
 
 ## To install first (manually)
 
-- add repo free & non free (RPM fusion)
-  - https://docs.fedoraproject.org/en-US/quick-docs/setup_rpmfusion/
+- (Apple only)
   - sudo dnf install broadcom-wl (Apple only)
     - sudo dnf update (then reboot)
 - Download latest rpmsphere-release rpm from
