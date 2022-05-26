@@ -5,6 +5,8 @@
 - (Apple only)
   - `sudo dnf install broadcom-wl`
     - `sudo dnf update` (then reboot)
+- (laptops only)
+  - install and configure TLP thresholds for BAT0
 - Download latest rpmsphere-release rpm from
   - https://github.com/rpmsphere/noarch/tree/master/r
 - `flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
