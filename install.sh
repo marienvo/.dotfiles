@@ -33,3 +33,6 @@ ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 
 # fix for snap (Fedora)
 sudo ln -s /var/lib/snapd/snap /snap
+
+# install deno (for running TS files)
+curl -fsSL https://deno.land/install.sh | sh
