@@ -25,4 +25,6 @@
   - sync bookmarks with FF account
 - Vimium C
   - map p passNextKey
+- Obsidian
+  - configure Templater: set Template and Scripts folder
 
