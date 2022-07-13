@@ -32,6 +32,7 @@
 - Run `./install.sh` to create symlinks
 
 ## Other
+- Set `alt+z` to run `toggle-terminal.sh`
 - Install Jetbrains toolbox via https://www.jetbrains.com/toolbox-app/
 - Install Peek, and configure as default **Print** hotkey
 - Set **alt-z** hotkey for `/home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh`
