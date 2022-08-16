@@ -37,5 +37,5 @@
 - Set **alt-z** hotkey for `/home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh`
 - Brave
   - Add sync code
-  - Vimium C: `map p passNextKey`
+  - Vimium C: `map p passNextKey`, `https://duckduckgo.com/?q=%s DuckDuckGo`
 
