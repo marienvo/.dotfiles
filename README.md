@@ -35,6 +35,8 @@
 - Set `alt+z` to run `toggle-terminal.sh`
 - Install Jetbrains toolbox via https://www.jetbrains.com/toolbox-app/
 - Install Peek, and configure as default **Print** hotkey
+- Gnome
+  - https://extensions.gnome.org/extension/1401/bluetooth-quick-connect/
 - Set **alt-z** hotkey for `/home/marienvanoverbeek/.dotfiles/scripts/toggle-terminal.sh`
 - Brave
   - Add sync code
