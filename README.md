@@ -11,7 +11,9 @@
   - https://github.com/rpmsphere/noarch/tree/master/r
 - `flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
 - `sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm`
+- Install Powerline font: https://github.com/powerline/fonts/tree/master/FiraMono
 - `sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop nodejs snapd golang-bin ffmpeg --skip-broken`
+- `git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack` 
 - Manually install Alacritty (deps first, then `cargo install alacritty`)
   - https://github.com/alacritty/alacritty/blob/master/INSTALL.md
 - `sudo snap install yubioath-desktop newsboat`
