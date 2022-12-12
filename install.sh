@@ -21,6 +21,8 @@ ln -s ~/.dotfiles/newsboat/urls ~/.config/newsboat/urls
 
 rm ~/.zshrc
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
+rm ~/.huskyrc
+ln -s ~/.dotfiles/.huskyrc ~/.huskyrc
 #rm ~/.vimrc
 #ln -s ~/.dotfiles/.vimrc ~/.vimrc
 rm ~/.tmux.conf
