@@ -60,7 +60,8 @@ function _titleOfNextMeeting () {
 
 function s {
     cd ~/Pictures/Screenshots > /dev/null 2>&1
-    identify -format "%wx%h\n" "$(ls -t|head -1)"
+    identify -format "H: %h\n" "$(ls -t|head -1)"
+    identify -format "W: %w\n" "$(ls -t|head -1)"
     cd - > /dev/null 2>&1
 }
 
