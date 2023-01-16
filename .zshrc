@@ -100,3 +100,8 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 eval $(thefuck --alias)
 export DENO_INSTALL="/home/marienvanoverbeek/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/marienvanoverbeek/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
