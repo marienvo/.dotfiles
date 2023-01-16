@@ -24,7 +24,7 @@ alias today='calcurse -stoday'
 alias tomorrow='calcurse -stomorrow'
 
 # Screensavers
-alias s='cmatrix'
+# alias s='cmatrix'
 alias news='newsboat'
 alias pod='podboat -a'
 
@@ -58,6 +58,13 @@ function _titleOfNextMeeting () {
     echo "$TEXT"
 }
 
+function s {
+    cd ~/Pictures/Screenshots > /dev/null 2>&1
+    identify -format "H: %h\n" "$(ls -t|head -1)"
+    identify -format "W: %w\n" "$(ls -t|head -1)"
+    cd - > /dev/null 2>&1
+}
+
 rawurlencode() {
   local string="${1}"
   local strlen=${#string}
@@ -75,14 +82,15 @@ rawurlencode() {
   echo "${encoded}"    # You can either set a return variable (FASTER)
   REPLY="${encoded}"   #+or echo the result (EASIER)... or both... :p
 }
-function transfer () {
-#     cloud_url="http://cloud.marienvanoverbeek.nl"
-    cloud_url="http://localhost:8080"
-    file="$1"
-    file_name=$(basename "$file" | sed -f ~/.dotfiles/url_escape.sed);
-#    echo $file_name
-     cat "$file"|curl -s --upload-file "-" "$cloud_url/$file_name"&&echo "";
-}
+# function transfer () {
+# #     cloud_url="http://cloud.marienvanoverbeek.nl"
+#     cloud_url="http://localhost:8080"
+#     file="$1"
+#     file_name=$(basename "$file" | sed -f ~/.dotfiles/url_escape.sed);
+# #    echo $file_name
+#      cat "$file"|curl -s --upload-file "-" "$cloud_url/$file_name"&&echo "";
+# }
+transfer(){ if [ $# -eq 0 ];then echo "No arguments specified.\nUsage:\n transfer <file|directory>\n ... | transfer <file_name>">&2;return 1;fi;if tty -s;then file="$1";file_name=$(basename "$file");if [ ! -e "$file" ];then echo "$file: No such file or directory">&2;return 1;fi;if [ -d "$file" ];then file_name="$file_name.zip" ,;(cd "$file"&&zip -r -q - .)|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null,;else cat "$file"|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null;fi;else file_name=$1;curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null;fi;}
 
 # Quick upload latest image from Pictures folder (i.e. screenshots)
 function qq () {
