@@ -5,6 +5,12 @@ export ZSH_THEME="spaceship"
 export SPACESHIP_BATTERY_SHOW="false"
 export plugins=(git)
 
+function pci {
+    sudo ufw enable && sudo freshclam
+    clear
+    /home/marienvanoverbeek/WebstormProjects/pci-workstation/pci-check.py
+}
+
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.dotfiles/scripts/task-aliases.sh
