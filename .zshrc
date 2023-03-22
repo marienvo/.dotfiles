@@ -6,6 +6,7 @@ export SPACESHIP_BATTERY_SHOW="false"
 export plugins=(git)
 
 function pci {
+    sudo dnf update
     sudo ufw enable && sudo freshclam
     clear
     /home/marienvanoverbeek/WebstormProjects/pci-workstation/pci-check.py
