@@ -33,6 +33,11 @@
 
 - Run `./install.sh` to create symlinks
 
+## Manual steps
+
+- Set password policy for user:
+  - `sudo chage --mindays 30 --maxdays 90 --warndays 30 marienvanoverbeek`
+
 ## Security
 
 - Install and enable ClamAV https://www.linuxcapable.com/install-clamav-on-fedora-linux/#Updates-and-Maintenance 

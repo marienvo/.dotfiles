@@ -3,4 +3,5 @@ CURRENT=$(pwd)
 echo $CURRENT > ~/.tmp_marked_working_dir
 RED='\033[0;31m'
 NC='\033[0m' # No Color
-printf "${RED}marked:${NC} $CURRENT\n"
+clear
+printf "${RED}mark${NC} $CURRENT;\ntype \`${RED}home${NC}\` to return to this folder\n"
