@@ -33,6 +33,11 @@
 
 - Run `./install.sh` to create symlinks
 
+## Security
+
+- Install and enable ClamAV https://www.linuxcapable.com/install-clamav-on-fedora-linux/#Updates-and-Maintenance 
+- Enable firewalld (or use ufw, but don't enable both at the same time)
+
 ## Other
 - Set `alt+z` to run `toggle-terminal.sh`
 - Install Jetbrains toolbox via https://www.jetbrains.com/toolbox-app/
