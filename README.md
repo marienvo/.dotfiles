@@ -33,6 +33,11 @@
 
 - Run `./install.sh` to create symlinks
 
+## Fix battery icon
+
+- `sudo sed -i '/[General]/a\Experimental=true' /etc/bluetooth/main.conf`
+- `sudo systemctl restart bluetooth`
+
 ## Manual steps
 
 - Set password policy for user:
