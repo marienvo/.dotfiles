@@ -38,6 +38,13 @@
 - `sudo sed -i '/[General]/a\Experimental=true' /etc/bluetooth/main.conf`
 - `sudo systemctl restart bluetooth`
 
+## Replace Obsidian icon
+
+```bash
+cd /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps
+sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png ./md.obsidian.Obsidian.png
+```
+
 ## Manual steps
 
 - Set password policy for user:
