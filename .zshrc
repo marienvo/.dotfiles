@@ -10,6 +10,7 @@ function pci {
     sudo ufw enable && sudo freshclam
     clear
     /home/marienvanoverbeek/WebstormProjects/pci-workstation/pci-check.py
+    rm ./email.txt
 }
 
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
@@ -123,3 +124,9 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+# bun completions
+[ -s "/home/marienvanoverbeek/.bun/_bun" ] && source "/home/marienvanoverbeek/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
