@@ -41,8 +41,7 @@
 ## Replace Obsidian icon
 
 ```bash
-cd /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps
-sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png ./md.obsidian.Obsidian.png
+sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png
 ```
 
 ## Manual steps

@@ -17,6 +17,7 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.dotfiles/scripts/task-aliases.sh
 
 alias wayvpn='sudo openconnect gp.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
+alias fixicon='sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png'
 alias open='xdg-open'
 alias ll='ls -lha'
 alias vim='nvim'
@@ -123,3 +124,9 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+# bun completions
+[ -s "/home/marienvanoverbeek/.bun/_bun" ] && source "/home/marienvanoverbeek/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
