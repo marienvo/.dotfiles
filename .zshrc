@@ -10,6 +10,7 @@ function pci {
     sudo ufw enable && sudo freshclam
     clear
     /home/marienvanoverbeek/WebstormProjects/pci-workstation/pci-check.py
+    rm ./email.txt
 }
 
 source $HOME/.oh-my-zsh/oh-my-zsh.sh

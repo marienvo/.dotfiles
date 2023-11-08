@@ -33,6 +33,10 @@
 
 - Run `./install.sh` to create symlinks
 
+## Check timedatectl
+
+- Run `timedatectl` to check if timezone is correct (no/inactive/no) / no warnings
+
 ## Fix battery icon
 
 - `sudo sed -i '/[General]/a\Experimental=true' /etc/bluetooth/main.conf`
