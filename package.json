@@ -1,0 +1,14 @@
+{
+  "name": "dotfiles",
+  "version": "1.0.0",
+  "description": "## To install first (manually)",
+  "main": "index.js",
+  "scripts": {
+    "emo": "node ./scripts/convert-emoji.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clipboardy": "^4.0.0"
+  }
+}

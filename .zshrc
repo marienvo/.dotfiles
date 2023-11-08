@@ -16,6 +16,11 @@ source $HOME/.oh-my-zsh/oh-my-zsh.sh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.dotfiles/scripts/task-aliases.sh
 
+function fixemo () {
+    cd /home/marienvanoverbeek/.dotfiles
+    npm run emo  "$1"
+    cd -
+}
 alias wayvpn='sudo openconnect gp.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
 alias fixicon='sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png'
 alias open='xdg-open'
