@@ -54,6 +54,11 @@ TODAY=$(date '+%s' -d "$(date '+%Y-%m-%d')")
 
 # Read through each line in todo.txt
 while IFS= read -r line; do
+    # Skip empty lines
+    if [[ -z "$line" ]]; then
+        continue
+    fi
+
     # Extract the due date from each task
     DUE_DATE=$(echo "$line" | grep -oP 'due:\K[0-9-]+')
 
@@ -67,7 +72,8 @@ while IFS= read -r line; do
 
         if zenity --question --icon=view-refresh --text="$TITLE"; then
             # If the user clicks "Yes":
-            flatpak run com.github.ransome1.sleek # Optional GUI app to mark tasks as done
+#            flatpak run com.github.ransome1.sleek # Optional GUI app to mark tasks as done
+            echo "Marking as done: $line"
         else
             notify-send -u normal --icon=view-refresh "$TITLE" "Muted for now"
         fi
