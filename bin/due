@@ -2,6 +2,13 @@
 # To run every hour, add this to crontab -e:
 # 0 * * * * ~/.dotfiles/bin/due
 
+# Set the DISPLAY variable
+export DISPLAY=:1
+
+# Ensure the script has access to the DBus session for desktop notifications
+# This might need adjustment based on your system setup
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
+
 # Get today's date in the same format as used in your todo.txt
 TODAY=$(date '+%Y-%m-%d')
 
@@ -28,7 +35,7 @@ while IFS= read -r line; do
             # If the user clicks "Yes":
             flatpak run com.github.ransome1.sleek
         else
-            notify-send -u normal --icon=view-refresh "$TITLE" "Will remind you later..."
+            notify-send -u normal --icon=view-refresh "$TITLE" "Set to done via Sleek app to mute this notification."
         fi
     fi
 done < "$FILE"
