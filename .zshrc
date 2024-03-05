@@ -140,5 +140,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Show todos (if any)
 today=$(date "+%Y-%m-%d")  # Get today's date in YYYY-MM-DD format
-todo.sh list | sed 's/\x1b\[[0-9;]*m//g' | head -n -2 | grep -v '^[0-9]\+ x ' | awk -v today="$today" '{for(i=1;i<=NF;i++) if ($i ~ /^due:/ && substr($i,5) > today) next}1' | sed -E 's/([0-9]{4}-[0-9]{2}-[0-9]{2} )?//; s/\b[^ ]*:[^ ]+\b//g'
+todo.sh list | sed 's/\x1b\[[0-9;]*m//g' | head -n -2 | grep -v '^[0-9]\+ x ' | awk -v today="$today" '{for(i=1;i<=NF;i++) if ($i ~ /^due:/ && substr($i,5) > today) next}1' | sed -E 's/^([0-9]{1,3}) [0-9]{4}-[0-9]{2}-[0-9]{2} /\1 /; s/\b[^ ]*:[^ ]+\b//g'
 
