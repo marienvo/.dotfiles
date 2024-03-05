@@ -59,7 +59,7 @@ while IFS= read -r line; do
 
         if zenity --question --icon=view-refresh --text="$TITLE"; then
             # If the user clicks "Yes":
-            flatpak run com.github.ransome1.sleek
+            flatpak run com.github.ransome1.sleek # Optional GUI app to mark tasks as done
         else
             notify-send -u normal --icon=view-refresh "$TITLE" "Set to done via Sleek app to mute this notification."
         fi
