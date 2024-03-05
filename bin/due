@@ -14,7 +14,7 @@ todo.sh archive >/dev/null 2>&1
 
 # Ensure Habit for tomorrow is set
 TODO_PATH="$HOME/Notes/todo.txt"
-HABIT="Read, walk or train 10 minutes rec:1d"
+HABIT="Read, walk or train 10 minutes rec:1d" # rec:1d is only to make it compatible with "sleek", not used by this script or task.sh
 
 # Read the last line of the file
 last_line=$(tail -n 1 "$TODO_PATH")
