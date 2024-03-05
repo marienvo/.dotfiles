@@ -27,6 +27,7 @@ alias fixicon='sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.
 alias open='xdg-open'
 alias ll='ls -lha'
 alias t='todo.sh'
+alias x='todo.sh done'
 alias vim='nvim'
 alias wiki='nvim ~/Documents/VimWiki/index.wiki'
 alias fixmock='mv ../Services/ServicesMocks/DC.ServicesMocks/mappings/apiMocks/** ../Services/ServicesMocks/DC.ServicesMocks/mappings/'

@@ -14,7 +14,8 @@ todo.sh archive >/dev/null 2>&1
 
 # Ensure Habit for tomorrow is set
 TODO_PATH="$HOME/Notes/todo.txt"
-HABIT="Do this rec:1d"
+HABIT="Read, walk or train 10 minutes rec:1d"
+
 
 # Get tomorrow's date in YYYY-MM-DD format and convert it to a timestamp
 tomorrow=$(date -d tomorrow "+%Y-%m-%d")
