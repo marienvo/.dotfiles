@@ -17,6 +17,7 @@
 - Manually install Alacritty (deps first, then `cargo install alacritty`)
   - https://github.com/alacritty/alacritty/blob/master/INSTALL.md
 - `sudo snap install yubioath-desktop newsboat`
+- `brew install todo-txt`
 - `sudo usermod --shell /bin/zsh marienvanoverbeek`
 - Setup newsboat
   - `ln -s /home/marienvanoverbeek/.dotfiles/newsboat/urls  /home/marienvanoverbeek/snap/newsboat/5842/.newsboat/urls` (target path might be different, run newsboat to check first)
