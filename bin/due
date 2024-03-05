@@ -9,6 +9,9 @@ export DISPLAY=:1
 # This might need adjustment based on your system setup
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
 
+# Archive done items
+todo.sh archive
+
 # Get today's date in the same format as used in your todo.txt
 TODAY=$(date '+%Y-%m-%d')
 
