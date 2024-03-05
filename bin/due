@@ -12,15 +12,36 @@ export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
 # Archive done items
 todo.sh archive
 
+# Ensure Habit for tomorrow is set
+TODO_PATH="$HOME/Notes/todo.txt"
+HABIT="Do this rec:1d"
+
+# Get tomorrow's date in YYYY-MM-DD format and convert it to a timestamp
+tomorrow=$(date -d tomorrow "+%Y-%m-%d")
+tomorrowStamp=$(date -d "$tomorrow" +%s)
+
+# Use awk to extract due dates from the file, find the earliest one
+earliestDue=$(grep "$HABIT due:" "$TODO_PATH" | sed -E "s/.*$HABIT due:([0-9]{4}-[0-9]{2}-[0-9]{2}).*/\1/" | sort | head -n 1)
+
+# Proceed only if we found at least one due date
+if [ -z "$earliestDue" ]; then
+    echo "$HABIT due:$tomorrow" >> "$TODO_PATH"
+elif [[ ! -z "$earliestDue" ]]; then
+    # Convert the earliest due date to a timestamp
+    earliestDueStamp=$(date -d "$earliestDue" +%s)
+
+    # Append a line with tomorrow's date to the file if the earliest due date is beyond tomorrow
+    [ $earliestDueStamp -gt $tomorrowStamp ] && echo "$HABIT due:$tomorrow" >> "$TODO_PATH"
+fi
+
+
 # Get today's date in the same format as used in your todo.txt
 TODAY=$(date '+%Y-%m-%d')
 
-# Path to the todo.txt file
-FILE="$HOME/Notes/todo.txt"
 
 # Check if the todo.txt file exists
-if [ ! -f "$FILE" ]; then
-    echo "File $FILE does not exist."
+if [ ! -f "$TODO_PATH" ]; then
+    echo "File $TODO_PATH does not exist."
     exit 1
 fi
 
@@ -41,4 +62,4 @@ while IFS= read -r line; do
             notify-send -u normal --icon=view-refresh "$TITLE" "Set to done via Sleek app to mute this notification."
         fi
     fi
-done < "$FILE"
+done < "$TODO_PATH"
