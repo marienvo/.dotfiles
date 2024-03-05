@@ -69,13 +69,17 @@ while IFS= read -r line; do
     if [ "$DUE_DATE_TS" -le "$TODAY" ]; then
         # Extract the title of the task
         TITLE=$(echo "$line" | sed -E 's/.*([0-9]{4}-[0-9]{2}-[0-9]{2}) //g' | sed -E 's/ rec:.*//')
+        safe_line=$(printf '%s\n' "$line" | sed 's:[][\/.^$*]:\\&:g')
 
-        if zenity --question --icon=view-refresh --text="$TITLE"; then
-            # If the user clicks "Yes":
-#            flatpak run com.github.ransome1.sleek # Optional GUI app to mark tasks as done
-            echo "Marking as done: $line"
+        if zenity --question --icon=view-refresh --no-wrap --title="Did you complete this task?" --text="$TITLE"; then
+            # Mark done when clicking "Yes":
+            echo -e "Marking as done: \n$safe_line"
+            sed -i "/^$safe_line$/s/^/x /" "$TODO_PATH"
         else
-            notify-send -u normal --icon=view-refresh "$TITLE" "Muted for now"
+            # Mute the task when clicking "No":
+            echo -e "Ignoring task: \n$safe_line"
+            notify-send -u normal --icon=media-playback-pause "$TITLE" "Task still pending"
+            # All icons: https://specifications.freedesktop.org/icon-naming-spec/latest/ar01s04.html
         fi
     fi
 done < "$TODO_PATH"
