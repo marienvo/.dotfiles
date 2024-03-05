@@ -16,6 +16,14 @@ todo.sh archive >/dev/null 2>&1
 TODO_PATH="$HOME/Notes/todo.txt"
 HABIT="Read, walk or train 10 minutes rec:1d"
 
+# Read the last line of the file
+last_line=$(tail -n 1 "$TODO_PATH")
+
+# Check if the last line is empty
+if [[ -n $last_line ]]; then
+    # If the last line is not empty, add an empty line to the file
+    echo "" >> "$TODO_PATH"
+fi
 
 # Get tomorrow's date in YYYY-MM-DD format and convert it to a timestamp
 tomorrow=$(date -d tomorrow "+%Y-%m-%d")
@@ -61,7 +69,7 @@ while IFS= read -r line; do
             # If the user clicks "Yes":
             flatpak run com.github.ransome1.sleek # Optional GUI app to mark tasks as done
         else
-            notify-send -u normal --icon=view-refresh "$TITLE" "Set to done via Sleek app to mute this notification."
+            notify-send -u normal --icon=view-refresh "$TITLE" "Muted for now"
         fi
     fi
 done < "$TODO_PATH"
