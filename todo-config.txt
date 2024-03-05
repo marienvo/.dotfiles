@@ -1,0 +1,4 @@
+TODO_DIR=~/.todo
+TODO_FILE=~/Notes/todo.txt
+DONE_FILE=~/Notes/todo-done.txt
+REPORT_FILE=~/Notes/todo-report.txt

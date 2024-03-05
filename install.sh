@@ -15,6 +15,10 @@ ln -s ~/.dotfiles/newsboat/config ~/.config/newsboat/config
 rm ~/.config/newsboat/urls
 ln -s ~/.dotfiles/newsboat/urls ~/.config/newsboat/urls
 
+mkdir ~/.todo
+rm ~/.todo/config
+ln -s ~/.dotfiles/todo-config.txt ~/.todo/config
+
 #mkdir ~/.moc/themes
 #ln -s ~/.dotfiles/.moc/themes/default ~/.moc/themes/default
 #ln -s ~/.dotfiles/.moc/config ~/.moc/config
