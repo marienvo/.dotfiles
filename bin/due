@@ -1,4 +1,6 @@
 #!/bin/bash
+# To run every hour, add this to crontab -e:
+# 0 * * * * ~/.dotfiles/bin/due
 
 # Get today's date in the same format as used in your todo.txt
 TODAY=$(date '+%Y-%m-%d')
