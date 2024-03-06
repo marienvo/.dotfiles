@@ -75,10 +75,12 @@ while IFS= read -r line; do
             # Mark done when clicking "Yes":
             echo -e "Marking as done: \n$safe_line"
             sed -i "/^$safe_line$/s/^/x /" "$TODO_PATH"
+            notify-send -t 10000 -u normal --icon=face-cool "$TITLE" "Task marked done"
+            # All icons: https://specifications.freedesktop.org/icon-naming-spec/latest/ar01s04.html
         else
             # Mute the task when clicking "No":
             echo -e "Ignoring task: \n$safe_line"
-            notify-send -u normal --icon=media-playback-pause "$TITLE" "Task still pending"
+            notify-send -t 10000 -u normal --icon=appointment-missed "$TITLE" "Task still pending..."
             # All icons: https://specifications.freedesktop.org/icon-naming-spec/latest/ar01s04.html
         fi
     fi
