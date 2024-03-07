@@ -57,6 +57,10 @@ while IFS= read -r line; do
     # Skip empty lines
     if [[ -z "$line" ]]; then
         continue
+    # Also skip lines that start with "x "
+    elif [[ "$line" == x\ * ]]; then
+        todo.sh archive >/dev/null 2>&1
+        continue
     fi
 
     # Extract the due date from each task
