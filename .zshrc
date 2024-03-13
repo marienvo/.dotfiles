@@ -119,7 +119,7 @@ function qq () {
 
 export FLYCTL_INSTALL="/home/marienvanoverbeek/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
-export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.dotfiles/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin
 fpath=($fpath "$HOME/.zfunctions")
 export VOLTA_HOME="$HOME/.volta"
