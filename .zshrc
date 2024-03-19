@@ -24,7 +24,7 @@ function fixemo () {
 }
 alias wayvpn='sudo openconnect gp.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
 alias fixicon='sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png'
-alias open='xdg-open'
+# alias open='xdg-open' not needed for macOS
 alias ll='ls -lha'
 alias t='todo.sh'
 function x () {
@@ -119,7 +119,6 @@ function qq () {
 
 export FLYCTL_INSTALL="/home/marienvanoverbeek/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
-export PATH="$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.dotfiles/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin
 fpath=($fpath "$HOME/.zfunctions")
 export VOLTA_HOME="$HOME/.volta"
@@ -141,6 +140,7 @@ esac
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
 
 # Show todos (if any)
 today=$(date "+%Y-%m-%d")  # Get today's date in YYYY-MM-DD format

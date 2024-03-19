@@ -25,6 +25,8 @@ ln -s ~/.dotfiles/todo-config.txt ~/.todo/config
 
 rm ~/.zshrc
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
+rm ~/.zprofile
+ln -s ~/.dotfiles/.zprofile ~/.zprofile
 rm ~/.huskyrc
 ln -s ~/.dotfiles/.huskyrc ~/.huskyrc
 #rm ~/.vimrc
