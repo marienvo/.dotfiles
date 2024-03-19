@@ -55,10 +55,7 @@ export NVM_DIR="$HOME/.nvm"
 
 autoload -U compinit && compinit -u
 
-function home () {
-    cd "$(<~/.tmp_marked_working_dir)" || clear
-}
-home
+
 
 source /etc/profile.d/bash_completion.sh
 

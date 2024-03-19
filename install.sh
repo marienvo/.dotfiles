@@ -6,8 +6,8 @@
 
 # Create symlinks
 mkdir ~/.config/alacritty
-rm ~/.config/alacritty/alacritty.yml
-ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
+rm ~/.config/alacritty/alacritty.toml
+ln -s ~/.dotfiles/alacritty.toml ~/.config/alacritty/alacritty.toml
 
 mkdir ~/.config/newsboat
 rm ~/.config/newsboat/config
