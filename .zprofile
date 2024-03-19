@@ -4,3 +4,5 @@ function home () {
     cd "$(<~/.tmp_marked_working_dir)" || clear
 }
 home
+
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh # macOS
