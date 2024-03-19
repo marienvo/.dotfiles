@@ -34,3 +34,8 @@ startup_mode = "Maximized"
 [window.padding]
 x = 7
 y = 3
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Control"
