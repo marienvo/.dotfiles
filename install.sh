@@ -6,8 +6,8 @@
 
 # Create symlinks
 mkdir ~/.config/alacritty
-rm ~/.config/alacritty/alacritty.yml
-ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
+rm ~/.config/alacritty/alacritty.toml
+ln -s ~/.dotfiles/alacritty.toml ~/.config/alacritty/alacritty.toml
 
 mkdir ~/.config/newsboat
 rm ~/.config/newsboat/config
@@ -15,12 +15,18 @@ ln -s ~/.dotfiles/newsboat/config ~/.config/newsboat/config
 rm ~/.config/newsboat/urls
 ln -s ~/.dotfiles/newsboat/urls ~/.config/newsboat/urls
 
+mkdir ~/.todo
+rm ~/.todo/config
+ln -s ~/.dotfiles/todo-config.txt ~/.todo/config
+
 #mkdir ~/.moc/themes
 #ln -s ~/.dotfiles/.moc/themes/default ~/.moc/themes/default
 #ln -s ~/.dotfiles/.moc/config ~/.moc/config
 
 rm ~/.zshrc
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
+rm ~/.zprofile
+ln -s ~/.dotfiles/.zprofile ~/.zprofile
 rm ~/.huskyrc
 ln -s ~/.dotfiles/.huskyrc ~/.huskyrc
 #rm ~/.vimrc

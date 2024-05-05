@@ -15,6 +15,8 @@
 - `sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop nodejs snapd golang-bin ffmpeg --skip-broken`
 - `git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack` 
 - `alacritty`
+- `brew install todo-txt`
+  - sleek is an optional GUI app
 - `sudo usermod --shell /bin/zsh marienvanoverbeek`
 - Install via git pull or curl:
   - oh-my-zsh
@@ -26,6 +28,31 @@
 ## Run installer
 
 - Run `./install.sh` to create symlinks
+
+## Check timedatectl
+
+- Run `timedatectl` to check if timezone is correct (no/inactive/no) / no warnings
+
+## Fix battery icon
+
+- `sudo sed -i '/[General]/a\Experimental=true' /etc/bluetooth/main.conf`
+- `sudo systemctl restart bluetooth`
+
+## Replace Obsidian icon
+
+```bash
+sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png
+```
+
+## Manual steps
+
+- Set password policy for user:
+  - `sudo chage --mindays 30 --maxdays 90 --warndays 30 marienvanoverbeek`
+
+## Security
+
+- Install and enable ClamAV https://www.linuxcapable.com/install-clamav-on-fedora-linux/#Updates-and-Maintenance 
+- Enable firewalld (or use ufw, but don't enable both at the same time)
 
 ## Other
 - Set `alt+z` to run `toggle-terminal.sh`

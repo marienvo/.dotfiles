@@ -1,0 +1,41 @@
+[colors.primary]
+background = "#000000"
+foreground = "#eaeaea"
+
+[font]
+
+[font.bold_italic]
+family = "Fira Mono for Powerline"
+style = "Bold Italic"
+
+[font.italic]
+family = "Fira Mono for Powerline"
+style = "Italic"
+
+[font.normal]
+family = "Fira Mono for Powerline"
+style = "Regular"
+
+[mouse]
+hide_when_typing = true
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+[shell]
+args = ["-l", "-c", "tmux attach || tmux new -s main"]
+program = "/bin/zsh"
+
+[window]
+decorations = "none"
+startup_mode = "Maximized"
+
+[window.padding]
+x = 7
+y = 3
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Control"

@@ -5,13 +5,32 @@ export ZSH_THEME="spaceship"
 export SPACESHIP_BATTERY_SHOW="false"
 export plugins=(git)
 
+function pci {
+    sudo dnf update
+    sudo ufw enable && sudo freshclam
+    clear
+    /home/marienvanoverbeek/WebstormProjects/pci-workstation/pci-check.py
+    rm ./email.txt
+}
+
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.dotfiles/scripts/task-aliases.sh
 
+function fixemo () {
+    cd /home/marienvanoverbeek/.dotfiles
+    npm run emo  "$1"
+    cd -
+}
 alias wayvpn='sudo openconnect gp.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
-alias open='xdg-open'
+alias fixicon='sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png'
+# alias open='xdg-open' not needed for macOS
 alias ll='ls -lha'
+alias t='todo.sh'
+function x () {
+    todo.sh done "$1"
+    due # not silent, will remind me of first due task
+}
 alias vim='nvim'
 alias wiki='nvim ~/Documents/VimWiki/index.wiki'
 alias fixmock='mv ../Services/ServicesMocks/DC.ServicesMocks/mappings/apiMocks/** ../Services/ServicesMocks/DC.ServicesMocks/mappings/'
@@ -32,14 +51,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
+# [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit -u
 
-function home () {
-    cd "$(<~/.tmp_marked_working_dir)" || clear
-}
-home
+
 
 source /etc/profile.d/bash_completion.sh
 
@@ -100,7 +116,6 @@ function qq () {
 
 export FLYCTL_INSTALL="/home/marienvanoverbeek/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
-export PATH="$HOME/.yarn/bin:$HOME/.dotfiles/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin
 fpath=($fpath "$HOME/.zfunctions")
 export VOLTA_HOME="$HOME/.volta"
@@ -111,7 +126,23 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/home/marienvanoverbeek/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 # pnpm end
+# bun completions
+[ -s "/home/marienvanoverbeek/.bun/_bun" ] && source "/home/marienvanoverbeek/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
+# Show todos (if any)
+today=$(date "+%Y-%m-%d")  # Get today's date in YYYY-MM-DD format
+todo.sh list | sed 's/\x1b\[[0-9;]*m//g' | head -n -2 | grep -v '^[0-9]\+ x ' | awk -v today="$today" '{for(i=1;i<=NF;i++) if ($i ~ /^due:/ && substr($i,5) > today) next}1' | sed -E 's/^([0-9]{1,3}) [0-9]{4}-[0-9]{2}-[0-9]{2} /\1 /; s/\b[^ ]*:[^ ]+\b//g'
+
+
 
 SPACESHIP_PROMPT_ASYNC=false
