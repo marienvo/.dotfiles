@@ -113,3 +113,5 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export PNPM_HOME="/home/marienvanoverbeek/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+
+SPACESHIP_PROMPT_ASYNC=false
