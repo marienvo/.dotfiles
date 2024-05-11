@@ -139,7 +139,8 @@ esac
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
-export PATH="/home/marienvanoverbeek/.dotfiles/bin:$PATH"
+export PATH="$HOME/.dotfiles/bin:$PATH"
+export PATH="$HOME/.local/state/Marathon/bin:$PATH"
 
 # Show todos (if any)
 today=$(date "+%Y-%m-%d")  # Get today's date in YYYY-MM-DD format
