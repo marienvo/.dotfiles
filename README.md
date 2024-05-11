@@ -24,6 +24,12 @@
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
 - `touch ~/.tmp_marked_working_dir`
+- Make VPN compatible with Palo Alto Networks GP
+  - `sudo dnf install NetworkManager-libreswan-gnome libreswan`
+- Fix Obsidian icon
+  - `sudo crontab -e`
+  - in that add this:
+  - `@reboot ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png`
 
 ## Run installer
 
