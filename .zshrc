@@ -23,6 +23,7 @@ function fixemo () {
     cd -
 }
 alias wayvpn='sudo openconnect gp.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
+alias sevpn='sudo openconnect vpn.stendahls.se --protocol=gp --user=marien.vanoverbeek --no-dtls'
 alias fixicon='sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png'
 # alias open='xdg-open' not needed for macOS
 alias ll='ls -lha'
@@ -138,6 +139,7 @@ esac
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="/home/marienvanoverbeek/.dotfiles/bin:$PATH"
 
 # Show todos (if any)
 today=$(date "+%Y-%m-%d")  # Get today's date in YYYY-MM-DD format
