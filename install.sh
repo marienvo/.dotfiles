@@ -6,8 +6,11 @@
 
 # Create symlinks
 mkdir ~/.config/alacritty
-rm ~/.config/alacritty/alacritty.yml
-ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
+rm ~/.config/alacritty/alacritty.toml
+ln -s ~/.dotfiles/alacritty.toml ~/.config/alacritty/alacritty.toml
+
+rm ~/.local/share/applications/marathon.desktop
+ln -s ~/.dotfiles/marathon.desktop ~/.local/share/applications/marathon.desktop
 
 mkdir ~/.config/newsboat
 rm ~/.config/newsboat/config
@@ -25,6 +28,8 @@ ln -s ~/.dotfiles/todo-config.txt ~/.todo/config
 
 rm ~/.zshrc
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
+rm ~/.zprofile
+ln -s ~/.dotfiles/.zprofile ~/.zprofile
 rm ~/.huskyrc
 ln -s ~/.dotfiles/.huskyrc ~/.huskyrc
 #rm ~/.vimrc

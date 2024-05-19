@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Marathon
+Comment=Marathon
+Exec=/home/marienvanoverbeek/.local/state/Marathon/bin/marathon
+Icon=/home/marienvanoverbeek/.dotfiles/assets/marathon.png
+Terminal=false
+Type=Application
+Categories=Utility;Application;

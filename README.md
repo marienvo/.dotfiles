@@ -14,23 +14,23 @@
 - Install Powerline font: https://github.com/powerline/fonts/tree/master/FiraMono
 - `sudo dnf install tmux zsh wmctrl xdotool zsh-syntax-highlighting autojump-zsh gnome-tweaks mp3blaster yubioath-desktop nodejs snapd golang-bin ffmpeg --skip-broken`
 - `git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack` 
-- Manually install Alacritty (deps first, then `cargo install alacritty`)
-  - https://github.com/alacritty/alacritty/blob/master/INSTALL.md
-- `sudo snap install yubioath-desktop newsboat`
+- `alacritty`
 - `brew install todo-txt`
   - sleek is an optional GUI app
 - `sudo usermod --shell /bin/zsh marienvanoverbeek`
-- Setup newsboat
-  - `ln -s /home/marienvanoverbeek/.dotfiles/newsboat/urls  /home/marienvanoverbeek/snap/newsboat/5842/.newsboat/urls` (target path might be different, run newsboat to check first)
-  - sync feeds??
-  - set colors??
 - Install via git pull or curl:
-  - tmux-themepack
   - oh-my-zsh
   - https://spaceship-prompt.sh/getting-started/ (use the oh-my-zsh instructions)
 - Set global gitignore file: (doesn't work?)
   - `git config --global core.excludesFile '~/.dotfiles/.globalgitignore'`
-  
+- `touch ~/.tmp_marked_working_dir`
+- Make VPN compatible with Palo Alto Networks GP
+  - `sudo dnf install NetworkManager-libreswan-gnome libreswan`
+- Fix Obsidian icon
+  - `sudo crontab -e`
+  - in that add this:
+  - `@reboot ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png`
+
 ## Run installer
 
 - Run `./install.sh` to create symlinks

@@ -23,8 +23,9 @@ function fixemo () {
     cd -
 }
 alias wayvpn='sudo openconnect gp.weareyou.com --protocol=gp --user=marien.vanoverbeek --no-dtls'
+alias sevpn='sudo openconnect vpn.stendahls.se --protocol=gp --user=marien.vanoverbeek --no-dtls'
 alias fixicon='sudo ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png'
-alias open='xdg-open'
+# alias open='xdg-open' not needed for macOS
 alias ll='ls -lha'
 alias t='todo.sh'
 function x () {
@@ -51,7 +52,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
+# [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit -u
 
@@ -119,7 +120,6 @@ function qq () {
 
 export FLYCTL_INSTALL="/home/marienvanoverbeek/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
-export PATH="$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.dotfiles/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin
 fpath=($fpath "$HOME/.zfunctions")
 export VOLTA_HOME="$HOME/.volta"
@@ -141,8 +141,14 @@ esac
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.dotfiles/bin:$PATH"
+export PATH="$HOME/.local/state/Marathon/bin:$PATH"
 
 # Show todos (if any)
 today=$(date "+%Y-%m-%d")  # Get today's date in YYYY-MM-DD format
-todo.sh list | sed 's/\x1b\[[0-9;]*m//g' | head -n -2 | grep -v '^[0-9]\+ x ' | awk -v today="$today" '{for(i=1;i<=NF;i++) if ($i ~ /^due:/ && substr($i,5) > today) next}1' | sed -E 's/^([0-9]{1,3}) [0-9]{4}-[0-9]{2}-[0-9]{2} /\1 /; s/\b[^ ]*:[^ ]+\b//g'
+# todo.sh list | sed 's/\x1b\[[0-9;]*m//g' | head -n -2 | grep -v '^[0-9]\+ x ' | awk -v today="$today" '{for(i=1;i<=NF;i++) if ($i ~ /^due:/ && substr($i,5) > today) next}1' | sed -E 's/^([0-9]{1,3}) [0-9]{4}-[0-9]{2}-[0-9]{2} /\1 /; s/\b[^ ]*:[^ ]+\b//g'
 
+
+
+SPACESHIP_PROMPT_ASYNC=false
