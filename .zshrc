@@ -205,7 +205,7 @@ SPACESHIP_PROMPT_ORDER=(
 #   battery        # Battery level and status
 #   jobs           # Background jobs indicator
   exit_code      # Exit code section
-  sudo           # Sudo indicator
+#  sudo           # Sudo indicator
   char           # Prompt character
 )
 
