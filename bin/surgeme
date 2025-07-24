@@ -13,4 +13,7 @@ kebab_case=$(echo "$current_dir" \
 
 hash=$(echo "$SALT:$kebab_case" | sha1sum | cut -c1-6)
 
-surge . "$kebab_case-$hash.surge.sh"
+#surge . "$kebab_case-$hash.marienvanoverbeek.nl"
+surge . "$kebab_case.marienvanoverbeek.nl"
+
+echo "https://$kebab_case.marienvanoverbeek.nl/"
