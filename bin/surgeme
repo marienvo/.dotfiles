@@ -1,0 +1,13 @@
+#!/bin/bash
+
+current_path=$(pwd)
+
+current_dir=$(basename "$current_path")
+
+kebab_case=$(echo "$current_dir" \
+  | sed 's/[ _]/-/g' \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed 's/--*/-/g' \
+  | sed 's/[^a-z0-9-]//g')
+
+surge . "$kebab_case".surge.sh
