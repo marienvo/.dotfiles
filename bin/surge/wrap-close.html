@@ -77,13 +77,17 @@
       // hide the button if no H3
       if (btn) btn.style.display = "none";
     } else {
-      btn.addEventListener("click", () => {
-        const groups = document.querySelectorAll("#toc .lvl-2");
-        const anyClosed = Array.from(groups).some(d => !d.open);
-        groups.forEach(d => d.open = anyClosed);
-        btn.textContent = anyClosed ? "Collapse all" : "Expand all";
-      });
-    }
+			btn.addEventListener("click", () => {
+				const groups = document.querySelectorAll("#toc .lvl-2");
+				const anyClosed = Array.from(groups).some(d => !d.open);
+
+				// User intent: treat this as manual; wipe auto flags first
+				groups.forEach(d => d.removeAttribute("data-auto-opened"));
+
+				groups.forEach(d => d.open = anyClosed);
+				btn.textContent = anyClosed ? "Collapse all" : "Expand all";
+			});
+		}
 
     // Optional: keep details open when clicking its summary link
     toc.addEventListener("click", (e) => {
@@ -108,12 +112,30 @@
 		function setActiveFor(el) {
 			const a = headingToAnchor.get(el);
 			if (!a) return;
+
 			clearActive();
 			a.classList.add("active");
 
+			// Close previously auto-opened groups (but keep manual ones)
+			document.querySelectorAll('#toc .lvl-2[data-auto-opened="1"]').forEach(d => {
+				const currentDetails = a.closest(".lvl-2");
+				if (d !== currentDetails) {
+					d.open = false;
+					d.removeAttribute("data-auto-opened");
+				}
+			});
+
 			// Open the corresponding H2 group if this is an H2 or H3 anchor
 			const lvl2 = a.closest(".lvl-2");
-			if (lvl2) lvl2.open = true;
+			if (lvl2) {
+				if (!lvl2.open) {
+					// Open and mark as auto-opened
+					lvl2.open = true;
+					lvl2.setAttribute("data-auto-opened", "1");
+				} else if (!lvl2.hasAttribute("data-auto-opened")) {
+					// Already manually opened; leave it as manual
+				}
+			}
 		}
 
 		function onScroll() {
