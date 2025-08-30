@@ -55,7 +55,10 @@
           const ul3 = document.createElement("ul"); ul3.className = "h3-list";
           for (const h3 of h2.h3s) {
             const li3 = document.createElement("li");
-            const a3 = document.createElement("a"); a3.href = `#${h3.id}`; a3.textContent = h3.textContent;
+            const a3 = document.createElement("a");
+						a3.href = `#${h3.id}`;
+						a3.textContent = h3.textContent;
+						headingToAnchor.set(h3, a3);
             li3.appendChild(a3); ul3.appendChild(li3);
           }
           d2.appendChild(ul3);
@@ -90,12 +93,12 @@
       }
     });
 
-    // ===== Active H2 tracking =====
-    // NOTE: If you have a fixed header, set this to its height in px.
-    const TOP_THRESHOLD = 8; // px: when H2 top <= this, we consider it "passed"
-    let ticking = false;
+		// ===== Active heading tracking (H1 + H2 + H3) =====
+		const TOP_THRESHOLD = 8; // px; set to fixed header height if you have one
+		let ticking = false;
 
-		const trackedElems = Array.from(headingToAnchor.keys());   // [H1, ...H2, ... H1(2), ...]
+// Keep arrays handy
+		const trackedElems = Array.from(headingToAnchor.keys());   // H1/H2/H3 in DOM order
 		const trackedAnchors = Array.from(headingToAnchor.values());
 
 		function clearActive() {
@@ -107,44 +110,41 @@
 			if (!a) return;
 			clearActive();
 			a.classList.add("active");
-			// Als dit een H2-link is, klap de groep open zodat je 'm ziet
+
+			// Open the corresponding H2 group if this is an H2 or H3 anchor
 			const lvl2 = a.closest(".lvl-2");
 			if (lvl2) lvl2.open = true;
 		}
 
 		function onScroll() {
-			if (!ticking) {
-				window.requestAnimationFrame(() => {
-					ticking = false;
-					if (!trackedElems.length) return;
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(() => {
+				ticking = false;
+				if (!trackedElems.length) return;
 
-					// 100% onderaan? -> laatste item actief (meestal laatste H2)
-					const doc = document.documentElement;
-					const atBottom = Math.ceil(window.scrollY + window.innerHeight) >= (doc.scrollHeight - 1);
-					if (atBottom) {
-						setActiveFor(trackedElems[trackedElems.length - 1]);
-						return;
-					}
+				// At bottom? -> activate very last heading (even if it's an H3)
+				const doc = document.documentElement;
+				const atBottom = Math.ceil(window.scrollY + window.innerHeight) >= (doc.scrollHeight - 1);
+				if (atBottom) {
+					setActiveFor(trackedElems[trackedElems.length - 1]);
+					return;
+				}
 
-					// Laatste heading (H1 of H2) waarvan top <= drempel
-					let current = null;
-					for (const el of trackedElems) {
-						const top = el.getBoundingClientRect().top;
-						if (top <= TOP_THRESHOLD) current = el; else break;
-					}
-
-					if (current) setActiveFor(current);
-					else clearActive(); // helemaal boven de H1
-				});
-				ticking = true;
-			}
+				// Find the last heading whose top is above threshold
+				let current = null;
+				for (const el of trackedElems) {
+					const top = el.getBoundingClientRect().top;
+					if (top <= TOP_THRESHOLD) current = el; else break;
+				}
+				if (current) setActiveFor(current);
+				else clearActive();
+			});
 		}
 
-    // Recompute on scroll/resize/content shifts
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    window.addEventListener("load", onScroll);
-    // Initial run
-    onScroll();
+		window.addEventListener("scroll", onScroll, { passive: true });
+		window.addEventListener("resize", onScroll);
+		window.addEventListener("load", onScroll);
+		onScroll();
   })();
 </script>
