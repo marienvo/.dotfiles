@@ -3,7 +3,10 @@ set -euo pipefail
 
 SALT="mysalt123"
 DIST="./dist-share-note"
-HEADER_FILE="./header.html"   # optional
+HEADER_FILE="./header.html"
+
+rm -rf "$DIST"
+mkdir -p "$DIST/assets"
 
 if [ $# -lt 1 ]; then
   echo "Usage: $0 entry.md"
