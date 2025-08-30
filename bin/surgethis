@@ -152,6 +152,23 @@ while [ ${#QUEUE[@]} -gt 0 ]; do
   build_html "$WORK_MD" "$out_html" "$DIST:$VAULT:$TMPDIR"
 done
 
+echo "Files to be uploaded to https://${DOMAIN}:"
+echo ""
+(
+  cd "$DIST"
+  # Print each filename in blue
+  find . -type f -printf '%P\n' | sort | while read -r f; do
+    printf '\033[34m%s\033[0m\n' "$f"
+  done
+)
+echo ""
+read -r -p "Is this ok [y/N]: " confirm
+if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+  echo "Cancelled."
+  exit 1
+fi
+
 # Publish
 surge "$DIST" "$DOMAIN"
 echo "Published: https://${DOMAIN}"
+
