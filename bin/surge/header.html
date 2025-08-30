@@ -1,7 +1,7 @@
 <!-- Mermaid (renders ```mermaid code fences) -->
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true });</script>
-
+<!--<link rel="stylesheet" href="styles.css">-->
 <style>
     /* Kill Pandoc's narrow body; center and widen content */
     :root {
@@ -26,77 +26,236 @@
     }
 
     /* Centered readable column */
-    main, .page, body > *:not(style):not(script):not(header) {
+    .page {
         box-sizing: border-box;
         max-width: var(--max);
         margin: 0 auto !important;
         padding: 80px var(--pad) 180px var(--pad);
     }
+    aside {
+        padding: 80px 0 10px 0;
+    }
     @media (max-width: 1024px) {
-        main, .page, body > *:not(style):not(script):not(header) {
+        .page {
             padding: 40px var(--pad) 90px var(--pad);
         }
+      aside {
+          padding: 40px 0 10px 0
+      }
     }
     @media (max-width: 730px) {
-        main, .page, body > *:not(style):not(script):not(header) {
+        .page {
             padding: 20px var(--pad) 45px var(--pad);
+        }
+      aside {
+          padding: 20px 0 10px 0
+      }
+    }
+
+
+
+
+    :root {
+        --muted: #6b7280;
+    }
+
+    /* ====== Layout ====== */
+    .wrap {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    aside {
+        position: sticky;
+        top: 12px;
+        align-self: start;
+        background: transparent;
+        color: #000;
+    }
+
+    @media (max-width: 1024px) {
+        .wrap {
+            grid-template-columns: 1fr;
+        }
+        aside {
+            position: static;
         }
     }
 
-
-
-
-    .wrap { display: grid; grid-template-columns: 320px 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; }
-    aside { position: sticky; top: 12px; align-self: start; background: transparent; color: #000; padding: 6px 0; }
-    @media (max-width: 1024px){ .wrap { grid-template-columns: 1fr } aside { position: static } }
-    /* Left guideline like your screenshot */
-    aside::before {
-        content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #111;
-        transform: translateX(-10px);
-    }
-
-    /* ============= Title ============= */
+    /* ====== Title ====== */
     .toc-title {
-        font-weight: 700; font-size: 14px; margin: 0 0 6px 0; padding-left: 0;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        /* Typography */
+        font-weight: 700;
+        font-size: 14px;
+
+        /* Spacing */
+        margin: 0 0 6px 0;
+        padding-left: 0;
+
+        /* Truncation */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    /* ============= List ============= */
-    #toc, #toc ul { list-style: none; margin: 0; padding: 0; }
-    .lvl1 { margin: 6px 0; }
+    /* ====== Lists ====== */
+    #toc,
+    #toc ul {
+        /* Remove default list styling */
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .lvl1 {
+        margin: 6px 0;
+    }
+
     .lvl1 > a {
-        font-weight: 700; text-decoration: none; color: inherit; display: block; padding: 2px 0;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        /* Typography */
+        font-weight: 700;
+        color: inherit;
+        text-decoration: none;
+
+        /* Box */
+        display: block;
+        padding: 2px 0;
+
+        /* Truncation */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
+
     /* H2 rows are clickable summaries; start collapsed (no h3 visible) */
-    details.toc-h2 { margin: 0; }
+    details.toc-h2 {
+        margin: 0;
+    }
+
     details.toc-h2 > summary {
-        list-style: none; cursor: pointer; padding: 2px 0 2px 16px; /* indent */
+        /* Remove default bullet/marker spacing */
+        list-style: none;
+
+        /* Interactions */
+        cursor: pointer;
         outline: none;
+
+        /* Indent */
+        padding: 2px 0 2px 16px;
     }
+
     details.toc-h2 > summary a {
-        text-decoration: none; color: inherit; display: inline-block; max-width: 100%;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        /* Links inside summary should look like text but be clickable */
+        display: inline-block;
+        max-width: 100%;
+        color: inherit;
+        text-decoration: none;
+
+        /* Truncation */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    /* H3 links (smaller, lighter) */
+
+
+    /* Shared link base + vertical guide line */
+    .lvl-1 a,
+    .lvl-2 a,
     .h3-list a {
-        display: block; padding: 2px 0 2px 32px; text-decoration: none; color: #111; opacity: .7;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px;
+        width: 150px;
+        display: block;
+        text-decoration: none;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        position: relative; /* Needed for the left guide line */
+    }
+    .lvl-1 a,
+    .lvl-2 a,
+    .h3-list a,
+    .helpers a,
+    .helpers button.linky {
+        padding: 2px 0 2px 20px;
+        color: var(--muted);
+    }
+    .lvl-1 a:hover,
+    .lvl-2 a:hover,
+    .h3-list a:hover,
+    .helpers a:hover,
+    .helpers button.linky:hover {
+        color: #000;
+    }
+    .lvl-2 a {
+        padding: 2px 0 2px 30px;
+    }
+    .h3-list a {
+        padding: 2px 0 2px 40px;
     }
 
-    /* ============= Helpers (links, not buttons) ============= */
-    .helpers { margin-top: 10px; display: grid; gap: 4px; font-size: 12px; }
-    .helpers a, .helpers button.linky {
-        appearance: none; border: 0; background: none; padding: 0; text-align: left;
-        color: #000; cursor: pointer; text-decoration: none;
+    .lvl-1 a:hover::before,
+    .lvl-2 a:hover::before,
+    .h3-list a:hover::before {
+        /* Vertical guide line on the left */
+        content: "";
+        position: absolute;
+        left: 0;
+        top: -3px;
+        bottom: -3px;
+        transform: translateX(10px);
+        width: 2px;
+        background: #111;
+        color: #000;
     }
 
+    /* ====== Helpers (links styled as text) ====== */
+    .helpers {
+        display: grid;
+        gap: 4px;
+        margin-top: 10px;
+        font-size: 12px;
+    }
+
+    .helpers a,
+    .helpers button.linky {
+        /* Reset button styles to look like links */
+        appearance: none;
+        border: 0;
+        background: none;
+        text-align: left;
+
+        /* Typography/interaction */
+        cursor: pointer;
+        text-decoration: none;
+
+        /* Ensure consistent text rendering */
+        font-family: sans-serif;
+    }
+
+    /* ====== Summary marker + focus ====== */
     /* Hide default disclosure marker on <summary> */
-    #toc summary::-webkit-details-marker { display: none; }
-    #toc summary::marker { content: ""; }
+    #toc summary::-webkit-details-marker {
+        display: none;
+    }
+    #toc summary::marker {
+        content: "";
+    }
 
     /* Keep keyboard focus visible */
-    #toc summary:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+    #toc summary:focus-visible {
+        outline: 2px solid #000;
+        outline-offset: 2px;
+    }
+
+    /* ====== Consistent TOC typography ====== */
+    #toc,
+    #toc a,
+    #toc summary {
+        font-size: 12px;
+        line-height: 16px;
+    }
 
 
 
