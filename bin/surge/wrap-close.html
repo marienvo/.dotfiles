@@ -29,6 +29,7 @@
 
     // Render TOC: H1 (details.lvl-1) -> H2 (details.lvl-2) -> H3 (links)
     const toc = document.getElementById("toc");
+    const h2ToAnchor = new Map(); // map H2 element -> its <a> in TOC
     for (const h1 of h1s) {
       const d1 = document.createElement("details");
       d1.className = "lvl-1"; d1.open = true;
@@ -45,6 +46,9 @@
         const s2 = document.createElement("summary");
         const a2 = document.createElement("a"); a2.href = `#${h2.el.id}`; a2.textContent = h2.el.textContent;
         s2.appendChild(a2); d2.appendChild(s2);
+
+        // --- keep reference so we can toggle .active on scroll ---
+        h2ToAnchor.set(h2.el, a2);
 
         if (h2.h3s.length) {
           const ul3 = document.createElement("ul"); ul3.className = "h3-list";
@@ -67,28 +71,86 @@
 
     if (!anyH3) {
       // hide the button if no H3
-      btn.style.display = "none";
-      return; // skip binding
+      if (btn) btn.style.display = "none";
+    } else {
+      btn.addEventListener("click", () => {
+        const groups = document.querySelectorAll("#toc .lvl-2");
+        const anyClosed = Array.from(groups).some(d => !d.open);
+        groups.forEach(d => d.open = anyClosed);
+        btn.textContent = anyClosed ? "Collapse all" : "Expand all";
+      });
     }
 
-    btn.addEventListener("click", () => {
-      const groups = document.querySelectorAll("#toc .lvl-2");
-      const anyClosed = Array.from(groups).some(d => !d.open);
-
-      // if any closed → open all, else → close all
-      groups.forEach(d => d.open = anyClosed);
-
-      // toggle button label
-      btn.textContent = anyClosed ? "Collapse all" : "Expand all";
-    });
-
-    // Optional: prevent summary click from toggling when link is used
+    // Optional: keep details open when clicking its summary link
     toc.addEventListener("click", (e) => {
-      // If clicking the <a> inside <summary>, don't toggle <details>
       if (e.target.tagName === "A" && e.target.parentElement.tagName === "SUMMARY") {
         // allow default (anchor jump), but avoid double-toggle flicker
         e.target.parentElement.parentElement.open = true;
       }
     });
+
+    // ===== Active H2 tracking =====
+    // NOTE: If you have a fixed header, set this to its height in px.
+    const TOP_THRESHOLD = 8; // px: when H2 top <= this, we consider it "passed"
+    let ticking = false;
+
+    const h2Elems = Array.from(h2ToAnchor.keys());
+    const h2Anchors = Array.from(h2ToAnchor.values());
+
+    function clearActive() {
+      // Remove .active only from H2 anchors
+      h2Anchors.forEach(a => a.classList.remove("active"));
+    }
+
+    function setActiveFor(h2El) {
+      const a = h2ToAnchor.get(h2El);
+      if (!a) return;
+      clearActive();
+      a.classList.add("active");
+      // Ensure its details are open so the active link is visible
+      const details = a.closest(".lvl-2");
+      if (details) details.open = true;
+    }
+
+    function onScroll() {
+      // Use rAF to throttle; otherwise we'd mark active on every scroll event and melt your CPU faster than fondue.
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          ticking = false;
+
+          if (!h2Elems.length) return;
+
+          // Bottom-of-page guard: if at 100% scroll -> last H2 is active
+          const doc = document.documentElement;
+          const atBottom = Math.ceil(window.scrollY + window.innerHeight) >= (doc.scrollHeight - 1);
+          if (atBottom) {
+            setActiveFor(h2Elems[h2Elems.length - 1]);
+            return;
+          }
+
+          // Find the last H2 whose top is above or equal to the threshold
+          let current = null;
+          for (const el of h2Elems) {
+            const top = el.getBoundingClientRect().top;
+            if (top <= TOP_THRESHOLD) current = el; else break;
+          }
+
+          if (current) {
+            setActiveFor(current);
+          } else {
+            // Before the first H2: nothing active
+            clearActive();
+          }
+        });
+        ticking = true;
+      }
+    }
+
+    // Recompute on scroll/resize/content shifts
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    window.addEventListener("load", onScroll);
+    // Initial run
+    onScroll();
   })();
 </script>
