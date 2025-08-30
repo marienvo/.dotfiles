@@ -59,6 +59,7 @@ entry_name="$(note_basename "$ENTRY")"
 entry_slug="$(slug "$entry_name")"
 domain_hash="$(echo "$SALT:$entry_slug" | sha1sum | cut -c1-6)"
 DOMAIN="${entry_slug}-${domain_hash}.marienvanoverbeek.nl"
+DOMAIN="${entry_slug}.marienvanoverbeek.nl"
 
 declare -A VISITED=()
 QUEUE=("$entry_name")
