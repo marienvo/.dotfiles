@@ -29,7 +29,7 @@
 
     // Render TOC: H1 (details.lvl-1) -> H2 (details.lvl-2) -> H3 (links)
     const toc = document.getElementById("toc");
-    const h2ToAnchor = new Map(); // map H2 element -> its <a> in TOC
+    const headingToAnchor = new Map(); // map H2 element -> its <a> in TOC
     for (const h1 of h1s) {
       const d1 = document.createElement("details");
       d1.className = "lvl-1"; d1.open = true;
@@ -37,6 +37,7 @@
       const a1 = document.createElement("a");
       a1.href = "#top";
       a1.textContent = h1.el.textContent;
+			headingToAnchor.set(h1.el, a1);
       s1.appendChild(a1); d1.appendChild(s1);
 
       const ul2 = document.createElement("ul");
@@ -48,7 +49,7 @@
         s2.appendChild(a2); d2.appendChild(s2);
 
         // --- keep reference so we can toggle .active on scroll ---
-        h2ToAnchor.set(h2.el, a2);
+				headingToAnchor.set(h2.el, a2);
 
         if (h2.h3s.length) {
           const ul3 = document.createElement("ul"); ul3.className = "h3-list";
@@ -94,57 +95,50 @@
     const TOP_THRESHOLD = 8; // px: when H2 top <= this, we consider it "passed"
     let ticking = false;
 
-    const h2Elems = Array.from(h2ToAnchor.keys());
-    const h2Anchors = Array.from(h2ToAnchor.values());
+		const trackedElems = Array.from(headingToAnchor.keys());   // [H1, ...H2, ... H1(2), ...]
+		const trackedAnchors = Array.from(headingToAnchor.values());
 
-    function clearActive() {
-      // Remove .active only from H2 anchors
-      h2Anchors.forEach(a => a.classList.remove("active"));
-    }
+		function clearActive() {
+			trackedAnchors.forEach(a => a.classList.remove("active"));
+		}
 
-    function setActiveFor(h2El) {
-      const a = h2ToAnchor.get(h2El);
-      if (!a) return;
-      clearActive();
-      a.classList.add("active");
-      // Ensure its details are open so the active link is visible
-      const details = a.closest(".lvl-2");
-      if (details) details.open = true;
-    }
+		function setActiveFor(el) {
+			const a = headingToAnchor.get(el);
+			if (!a) return;
+			clearActive();
+			a.classList.add("active");
+			// Als dit een H2-link is, klap de groep open zodat je 'm ziet
+			const lvl2 = a.closest(".lvl-2");
+			if (lvl2) lvl2.open = true;
+		}
 
-    function onScroll() {
-      // Use rAF to throttle; otherwise we'd mark active on every scroll event and melt your CPU faster than fondue.
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          ticking = false;
+		function onScroll() {
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					ticking = false;
+					if (!trackedElems.length) return;
 
-          if (!h2Elems.length) return;
+					// 100% onderaan? -> laatste item actief (meestal laatste H2)
+					const doc = document.documentElement;
+					const atBottom = Math.ceil(window.scrollY + window.innerHeight) >= (doc.scrollHeight - 1);
+					if (atBottom) {
+						setActiveFor(trackedElems[trackedElems.length - 1]);
+						return;
+					}
 
-          // Bottom-of-page guard: if at 100% scroll -> last H2 is active
-          const doc = document.documentElement;
-          const atBottom = Math.ceil(window.scrollY + window.innerHeight) >= (doc.scrollHeight - 1);
-          if (atBottom) {
-            setActiveFor(h2Elems[h2Elems.length - 1]);
-            return;
-          }
+					// Laatste heading (H1 of H2) waarvan top <= drempel
+					let current = null;
+					for (const el of trackedElems) {
+						const top = el.getBoundingClientRect().top;
+						if (top <= TOP_THRESHOLD) current = el; else break;
+					}
 
-          // Find the last H2 whose top is above or equal to the threshold
-          let current = null;
-          for (const el of h2Elems) {
-            const top = el.getBoundingClientRect().top;
-            if (top <= TOP_THRESHOLD) current = el; else break;
-          }
-
-          if (current) {
-            setActiveFor(current);
-          } else {
-            // Before the first H2: nothing active
-            clearActive();
-          }
-        });
-        ticking = true;
-      }
-    }
+					if (current) setActiveFor(current);
+					else clearActive(); // helemaal boven de H1
+				});
+				ticking = true;
+			}
+		}
 
     // Recompute on scroll/resize/content shifts
     window.addEventListener("scroll", onScroll, { passive: true });
