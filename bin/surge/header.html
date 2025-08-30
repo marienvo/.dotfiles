@@ -91,6 +91,14 @@
         color: #000; cursor: pointer; text-decoration: none;
     }
 
+    /* Hide default disclosure marker on <summary> */
+    #toc summary::-webkit-details-marker { display: none; }
+    #toc summary::marker { content: ""; }
+
+    /* Keep keyboard focus visible */
+    #toc summary:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+
+
 
 
 
