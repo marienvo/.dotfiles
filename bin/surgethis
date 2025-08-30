@@ -1,0 +1,75 @@
+#!/bin/bash
+set -euo pipefail
+
+SALT="mysalt123"
+
+# Input: a single Markdown file in the current working directory
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 file.md"
+  exit 1
+fi
+NOTE="$1"
+if [ ! -f "$NOTE" ]; then
+  echo "Error: file not found: $NOTE"
+  exit 1
+fi
+
+# Slug + hash based on the filename (without extension)
+basename_noext="$(basename "$NOTE" .md)"
+kebab_case="$(echo "$basename_noext" \
+  | sed 's/[ _]/-/g' \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed 's/--*/-/g' \
+  | sed 's/[^a-z0-9-]//g')"
+hash="$(echo "$SALT:$kebab_case" | sha1sum | cut -c1-6)"
+DOMAIN="${kebab_case}-${hash}.marienvanoverbeek.nl"
+
+DIST="./dist-share-note"
+mkdir -p "$DIST"
+
+# Try to normalize with obsidian-export; fallback to original
+VAULT="$(pwd)"
+REL_NOTE="$(realpath --relative-to="$VAULT" "$NOTE" || echo "$NOTE")"
+TMPDIR="$(mktemp -d)"
+EXPORT_DIR="${TMPDIR}/export"
+SRC_MD=""
+
+if command -v obsidian-export >/dev/null 2>&1; then
+  # Export only the target note (and its embeds/images) to a temp directory
+  obsidian-export "$VAULT" "$EXPORT_DIR" --plugins --include "$REL_NOTE" >/dev/null
+  CANDIDATE="${EXPORT_DIR}/${REL_NOTE}"
+  if [ -f "$CANDIDATE" ]; then
+    SRC_MD="$CANDIDATE"
+  fi
+fi
+
+# Fallback if obsidian-export isn't present or didn't output the note
+if [ -z "${SRC_MD:-}" ]; then
+  SRC_MD="$NOTE"
+fi
+
+# Optional: include header.html if present (for custom CSS/Mermaid, etc.)
+HEADER_FILE="./header.html"
+INCLUDE_HEADER_ARGS=()
+if [ -f "$HEADER_FILE" ]; then
+  INCLUDE_HEADER_ARGS=(--include-in-header "$HEADER_FILE")
+fi
+
+# Title based on filename
+TITLE="$basename_noext"
+
+# Convert to self-contained HTML (resources resolved from export dir and vault)
+pandoc \
+  --from=gfm+emoji+wikilinks_title_after_pipe \
+  --to=html5 \
+  --standalone \
+  --embed-resources \
+  --metadata=title:"$TITLE" \
+  --resource-path="${EXPORT_DIR:-.}:${VAULT}:." \
+  "${INCLUDE_HEADER_ARGS[@]}" \
+  --output="${DIST}/index.html" \
+  "$SRC_MD"
+
+# Publish to Surge
+surge "$DIST" "$DOMAIN"
+echo "Published: https://${DOMAIN}"
