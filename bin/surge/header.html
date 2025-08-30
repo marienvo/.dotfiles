@@ -4,7 +4,16 @@
 
 <style>
     /* Kill Pandoc's narrow body; center and widen content */
-    :root { --max: 960px; --pad: clamp(16px, 4vw, 40px); }
+    :root {
+        --max: 960px;
+        --pad: clamp(16px, 4vw, 40px);
+        --toc-w: 280px;
+        --accent: #111827; /* slate-900-ish */
+        --muted: #6b7280;  /* slate-500-ish */
+        --br: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
 
     /* Override defaults from Pandoc's built-in stylesheet */
     body {
@@ -33,6 +42,57 @@
             padding: 20px var(--pad) 45px var(--pad);
         }
     }
+
+
+
+
+    .wrap { display: grid; grid-template-columns: 320px 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; }
+    aside { position: sticky; top: 12px; align-self: start; background: transparent; color: #000; padding: 6px 0; }
+    @media (max-width: 1024px){ .wrap { grid-template-columns: 1fr } aside { position: static } }
+    /* Left guideline like your screenshot */
+    aside::before {
+        content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #111;
+        transform: translateX(-10px);
+    }
+
+    /* ============= Title ============= */
+    .toc-title {
+        font-weight: 700; font-size: 14px; margin: 0 0 6px 0; padding-left: 0;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* ============= List ============= */
+    #toc, #toc ul { list-style: none; margin: 0; padding: 0; }
+    .lvl1 { margin: 6px 0; }
+    .lvl1 > a {
+        font-weight: 700; text-decoration: none; color: inherit; display: block; padding: 2px 0;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    /* H2 rows are clickable summaries; start collapsed (no h3 visible) */
+    details.toc-h2 { margin: 0; }
+    details.toc-h2 > summary {
+        list-style: none; cursor: pointer; padding: 2px 0 2px 16px; /* indent */
+        outline: none;
+    }
+    details.toc-h2 > summary a {
+        text-decoration: none; color: inherit; display: inline-block; max-width: 100%;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    /* H3 links (smaller, lighter) */
+    .h3-list a {
+        display: block; padding: 2px 0 2px 32px; text-decoration: none; color: #111; opacity: .7;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px;
+    }
+
+    /* ============= Helpers (links, not buttons) ============= */
+    .helpers { margin-top: 10px; display: grid; gap: 4px; font-size: 12px; }
+    .helpers a, .helpers button.linky {
+        appearance: none; border: 0; background: none; padding: 0; text-align: left;
+        color: #000; cursor: pointer; text-decoration: none;
+    }
+
+
+
 
     /* Elements */
     img { max-width: 100%; height: auto; }
