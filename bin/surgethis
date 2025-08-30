@@ -186,18 +186,31 @@ done
 
 echo "Files to be uploaded to https://${DOMAIN}:"
 echo ""
+
+count=$(
+  cd "$DIST" || exit 1
+  find . -type f | wc -l
+)
+
 (
-  cd "$DIST"
+  cd "$DIST" || exit 1
   # Print each filename in blue
   find . -type f -printf '%P\n' | sort | while read -r f; do
     printf '\033[34m%s\033[0m\n' "$f"
   done
 )
+
 echo ""
-read -r -p "Is this ok [y/N]: " confirm
-if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
-  echo "Cancelled."
+
+if (( count == 0 )); then
+  echo "No files to upload."
   exit 1
+elif (( count > 1 )); then
+  read -r -p "More than one file to be uploaded. Is this ok [y/N]: " confirm
+  if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+    echo "Cancelled."
+    exit 1
+  fi
 fi
 
 # Publish
