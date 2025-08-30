@@ -15,7 +15,29 @@ fi
 ENTRY="$1"
 [ -f "$ENTRY" ] || { echo "Error: file not found: $ENTRY"; exit 1; }
 
-# ---------- helpers (US English comments) ----------
+# ---------- helpers ----------
+first_h1 () {
+  # Return first H1 from a Markdown file (ATX or Setext). Empty if none.
+  local file="$1"
+
+  # ATX: "# Title"
+  local t
+  t=$(grep -m1 -E '^[[:space:]]*#( +)([^#].*)$' "$file" | sed -E 's/^[[:space:]]*# +//')
+  if [ -n "$t" ]; then
+    echo "$t"
+    return
+  fi
+
+  # Setext H1:
+  #   Title
+  #   =====
+  awk '
+    NR>1 {
+      if (prev ~ /[^[:space:]]/ && $0 ~ /^[[:space:]]*=+\s*$/) { print prev; exit }
+    }
+    { prev=$0 }
+  ' "$file"
+}
 slug () {
   echo "$1" \
     | tr '[:upper:]' '[:lower:]' \
@@ -35,15 +57,22 @@ note_basename () { basename "$1" .md; }
 escape_sed () { printf '%s' "$1" | sed -e 's/[.[\*^$()+?{}|/\\]/\\&/g'; }
 
 build_html () {
+  # $1 = source MD (already rewritten), $2 = out html path, $3 = resource-path
   local src_md="$1" out_html="$2" respath="$3"
   local include_args=()
   [ -f "$HEADER_FILE" ] && include_args=(--include-in-header "$HEADER_FILE")
+
+  # Page title = first H1 or fallback to domain
+  local page_title
+  page_title="$(first_h1 "$src_md")"
+  [ -z "$page_title" ] && page_title="$DOMAIN"
+
   pandoc \
     --from=gfm+emoji+wikilinks_title_after_pipe+hard_line_breaks \
     --to=html5 \
     --standalone \
     --embed-resources \
-    --metadata=pagetitle:"$(note_basename "$src_md")" \
+    --metadata=pagetitle:"$page_title" \
     --resource-path="$respath" \
     "${include_args[@]}" \
     --output="$out_html" \
