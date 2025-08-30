@@ -39,7 +39,7 @@ build_html () {
   local include_args=()
   [ -f "$HEADER_FILE" ] && include_args=(--include-in-header "$HEADER_FILE")
   pandoc \
-    --from=gfm+emoji+wikilinks_title_after_pipe \
+    --from=gfm+emoji+wikilinks_title_after_pipe+hard_line_breaks \
     --to=html5 \
     --standalone \
     --embed-resources \
