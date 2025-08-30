@@ -14,7 +14,7 @@ if [ ! -f "$NOTE" ]; then
   exit 1
 fi
 
-# Slug + hash based on the filename (without extension)
+# Domain based on filename (no .md), kebab-case + short hash
 basename_noext="$(basename "$NOTE" .md)"
 kebab_case="$(echo "$basename_noext" \
   | sed 's/[ _]/-/g' \
@@ -27,49 +27,106 @@ DOMAIN="${kebab_case}-${hash}.marienvanoverbeek.nl"
 DIST="./dist-share-note"
 mkdir -p "$DIST"
 
-# Try to normalize with obsidian-export; fallback to original
 VAULT="$(pwd)"
-REL_NOTE="$(realpath --relative-to="$VAULT" "$NOTE" || echo "$NOTE")"
+REL_NOTE="$(realpath --relative-to="$VAULT" "$NOTE" 2>/dev/null || echo "$NOTE")"
 TMPDIR="$(mktemp -d)"
 EXPORT_DIR="${TMPDIR}/export"
 SRC_MD=""
+RESOURCE_ROOTS=()
+USED_MODE="fallback"
 
+# Helper: make a safe filename (lowercase, spaces -> -, strip weird chars)
+safe_name () {
+  echo "$1" \
+    | tr '[:upper:]' '[:lower:]' \
+    | sed 's/[ _]/-/g' \
+    | sed 's/[^a-z0-9.-]/-/g' \
+    | sed 's/--*/-/g'
+}
+
+# Try obsidian-export (preferred)
 if command -v obsidian-export >/dev/null 2>&1; then
-  # Export only the target note (and its embeds/images) to a temp directory
+  mkdir -p "$EXPORT_DIR"
   obsidian-export "$VAULT" "$EXPORT_DIR" --plugins --include "$REL_NOTE" >/dev/null
   CANDIDATE="${EXPORT_DIR}/${REL_NOTE}"
   if [ -f "$CANDIDATE" ]; then
     SRC_MD="$CANDIDATE"
+    USED_MODE="export"
+    RESOURCE_ROOTS+=("$EXPORT_DIR")
   fi
 fi
 
-# Fallback if obsidian-export isn't present or didn't output the note
 if [ -z "${SRC_MD:-}" ]; then
-  SRC_MD="$NOTE"
+  # --- Fallback: rewrite embeds and normalize asset filenames ---
+  USED_MODE="fallback"
+  WORK_MD="${TMPDIR}/normalized.md"
+  ASSETS_TMP="${TMPDIR}/assets"
+  mkdir -p "$ASSETS_TMP"
+  cp "$NOTE" "$WORK_MD"
+
+  # Find unique targets in ![[...]]
+  mapfile -t EMBEDS < <(grep -oP '!\[\[\K[^\]]+(?=\]\])' "$NOTE" | sort -u || true)
+
+  for target in "${EMBEDS[@]:-}"; do
+    FOUND_PATH="$(find "$VAULT" -type f -name "$target" -print -quit 2>/dev/null || true)"
+    safe="$(safe_name "$target")"
+    if [ -n "$FOUND_PATH" ]; then
+      cp "$FOUND_PATH" "$ASSETS_TMP/$safe"
+      # Replace embed with normalized path (no leading slash)
+      # NOTE: comments in English as requested.
+      # Escape slashes in $target for sed
+      esc_target=$(printf '%s\n' "$target" | sed 's/[.[\*^$()+?/{}|]/\\&/g')
+      sed -i "s|!\[\[$esc_target\]\]|![](assets/$safe)|g" "$WORK_MD"
+    else
+      # If not found, at least drop the embed syntax
+      esc_target=$(printf '%s\n' "$target" | sed 's/[.[\*^$()+?/{}|]/\\&/g')
+      sed -i "s|!\[\[$esc_target\]\]|![]($safe)|g" "$WORK_MD"
+      echo "Warning: asset not found in vault: $target" >&2
+    fi
+  done
+
+  SRC_MD="$WORK_MD"
+  RESOURCE_ROOTS+=("$TMPDIR" "$VAULT")
+else
+  RESOURCE_ROOTS+=("$VAULT")
 fi
 
-# Optional: include header.html if present (for custom CSS/Mermaid, etc.)
+# Optional header (local scripts/styles if you want truly single-file)
 HEADER_FILE="./header.html"
 INCLUDE_HEADER_ARGS=()
 if [ -f "$HEADER_FILE" ]; then
   INCLUDE_HEADER_ARGS=(--include-in-header "$HEADER_FILE")
 fi
 
-# Title based on filename
 TITLE="$basename_noext"
+RESOURCE_PATH="$(IFS=:; echo "${RESOURCE_ROOTS[*]:-.}")"
 
-# Convert to self-contained HTML (resources resolved from export dir and vault)
+# Build HTML (embed what Pandoc can)
 pandoc \
   --from=gfm+emoji+wikilinks_title_after_pipe \
   --to=html5 \
   --standalone \
   --embed-resources \
   --metadata=title:"$TITLE" \
-  --resource-path="${EXPORT_DIR:-.}:${VAULT}:." \
+  --resource-path="$RESOURCE_PATH" \
   "${INCLUDE_HEADER_ARGS[@]}" \
   --output="${DIST}/index.html" \
   "$SRC_MD"
 
-# Publish to Surge
+# Copy physical assets to dist for non-embedded fallbacks
+if [ "$USED_MODE" = "fallback" ] && [ -d "${ASSETS_TMP:-}" ]; then
+  mkdir -p "$DIST/assets"
+  # Quote the glob to handle zero or many files; use 'shopt -s nullglob' alternative if needed
+  cp -n "$ASSETS_TMP/"* "$DIST/assets/" 2>/dev/null || true
+fi
+if [ "$USED_MODE" = "export" ] && [ -d "$EXPORT_DIR" ]; then
+  mkdir -p "$DIST/assets"
+  rsync -a --include='*/' \
+    --include='*.png' --include='*.jpg' --include='*.jpeg' \
+    --include='*.gif' --include='*.svg' --include='*.webp' \
+    --exclude='*' "$EXPORT_DIR"/ "$DIST/assets/" 2>/dev/null || true
+fi
+
+# Publish
 surge "$DIST" "$DOMAIN"
 echo "Published: https://${DOMAIN}"
