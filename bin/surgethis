@@ -2,130 +2,145 @@
 set -euo pipefail
 
 SALT="mysalt123"
-
-# Input: a single Markdown file in the current working directory
-if [ $# -lt 1 ]; then
-  echo "Usage: $0 file.md"
-  exit 1
-fi
-NOTE="$1"
-if [ ! -f "$NOTE" ]; then
-  echo "Error: file not found: $NOTE"
-  exit 1
-fi
-
-# Domain based on filename (no .md), kebab-case + short hash
-basename_noext="$(basename "$NOTE" .md)"
-kebab_case="$(echo "$basename_noext" \
-  | sed 's/[ _]/-/g' \
-  | tr '[:upper:]' '[:lower:]' \
-  | sed 's/--*/-/g' \
-  | sed 's/[^a-z0-9-]//g')"
-hash="$(echo "$SALT:$kebab_case" | sha1sum | cut -c1-6)"
-DOMAIN="${kebab_case}-${hash}.marienvanoverbeek.nl"
-
 DIST="./dist-share-note"
-mkdir -p "$DIST"
+HEADER_FILE="./header.html"   # optional
 
-VAULT="$(pwd)"
-REL_NOTE="$(realpath --relative-to="$VAULT" "$NOTE" 2>/dev/null || echo "$NOTE")"
-TMPDIR="$(mktemp -d)"
-EXPORT_DIR="${TMPDIR}/export"
-SRC_MD=""
-RESOURCE_ROOTS=()
-USED_MODE="fallback"
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 entry.md"
+  exit 1
+fi
+ENTRY="$1"
+[ -f "$ENTRY" ] || { echo "Error: file not found: $ENTRY"; exit 1; }
 
-# Helper: make a safe filename (lowercase, spaces -> -, strip weird chars)
-safe_name () {
+# ---------- helpers (US English comments) ----------
+slug () {
+  echo "$1" \
+    | tr '[:upper:]' '[:lower:]' \
+    | sed 's/[ _]/-/g' \
+    | sed 's/[^a-z0-9-]/-/g' \
+    | sed 's/--*/-/g' \
+    | sed 's/^-//' | sed 's/-$//'
+}
+safe_asset () {
   echo "$1" \
     | tr '[:upper:]' '[:lower:]' \
     | sed 's/[ _]/-/g' \
     | sed 's/[^a-z0-9.-]/-/g' \
     | sed 's/--*/-/g'
 }
+note_basename () { basename "$1" .md; }
+escape_sed () { printf '%s' "$1" | sed -e 's/[.[\*^$()+?{}|/\\]/\\&/g'; }
 
-# Try obsidian-export (preferred)
-if command -v obsidian-export >/dev/null 2>&1; then
-  mkdir -p "$EXPORT_DIR"
-  obsidian-export "$VAULT" "$EXPORT_DIR" --plugins --include "$REL_NOTE" >/dev/null
-  CANDIDATE="${EXPORT_DIR}/${REL_NOTE}"
-  if [ -f "$CANDIDATE" ]; then
-    SRC_MD="$CANDIDATE"
-    USED_MODE="export"
-    RESOURCE_ROOTS+=("$EXPORT_DIR")
-  fi
-fi
+build_html () {
+  local src_md="$1" out_html="$2" respath="$3"
+  local include_args=()
+  [ -f "$HEADER_FILE" ] && include_args=(--include-in-header "$HEADER_FILE")
+  pandoc \
+    --from=gfm+emoji+wikilinks_title_after_pipe \
+    --to=html5 \
+    --standalone \
+    --embed-resources \
+    --metadata=title:"$(note_basename "$src_md")" \
+    --resource-path="$respath" \
+    "${include_args[@]}" \
+    --output="$out_html" \
+    "$src_md"
+}
+# ---------------------------------------------------
 
-if [ -z "${SRC_MD:-}" ]; then
-  # --- Fallback: rewrite embeds and normalize asset filenames ---
-  USED_MODE="fallback"
-  WORK_MD="${TMPDIR}/normalized.md"
-  ASSETS_TMP="${TMPDIR}/assets"
-  mkdir -p "$ASSETS_TMP"
-  cp "$NOTE" "$WORK_MD"
+mkdir -p "$DIST/assets"
+VAULT="$(pwd)"
+TMPROOT="$(mktemp -d)"
 
-  # Find unique targets in ![[...]]
-  mapfile -t EMBEDS < <(grep -oP '!\[\[\K[^\]]+(?=\]\])' "$NOTE" | sort -u || true)
+entry_name="$(note_basename "$ENTRY")"
+entry_slug="$(slug "$entry_name")"
+domain_hash="$(echo "$SALT:$entry_slug" | sha1sum | cut -c1-6)"
+DOMAIN="${entry_slug}-${domain_hash}.marienvanoverbeek.nl"
 
-  for target in "${EMBEDS[@]:-}"; do
-    FOUND_PATH="$(find "$VAULT" -type f -name "$target" -print -quit 2>/dev/null || true)"
-    safe="$(safe_name "$target")"
-    if [ -n "$FOUND_PATH" ]; then
-      cp "$FOUND_PATH" "$ASSETS_TMP/$safe"
-      # Replace embed with normalized path (no leading slash)
-      # NOTE: comments in English as requested.
-      # Escape slashes in $target for sed
-      esc_target=$(printf '%s\n' "$target" | sed 's/[.[\*^$()+?/{}|]/\\&/g')
+declare -A VISITED=()
+QUEUE=("$entry_name")
+
+while [ ${#QUEUE[@]} -gt 0 ]; do
+  current="${QUEUE[0]}"; QUEUE=("${QUEUE[@]:1}")
+  [ -n "${VISITED[$current]+x}" ] && continue
+  VISITED["$current"]=1
+
+  src_md_path="./${current}.md"
+  [ -f "$src_md_path" ] || continue
+
+  TMPDIR="$(mktemp -d -p "$TMPROOT")"
+  WORK_MD="${TMPDIR}/work.md"
+  cp "$src_md_path" "$WORK_MD"
+
+  # --- Images: ![[...]] ---
+  # Extract and ignore empties
+  mapfile -t IMG_EMBEDS < <(grep -oP '!\[\[\K[^\]]+(?=\]\])' "$src_md_path" 2>/dev/null \
+                            | sed '/^\s*$/d' | sort -u || true)
+  for target in "${IMG_EMBEDS[@]:-}"; do
+    [ -n "$target" ] || continue
+    FOUND="$(find "$VAULT" -type f -name "$target" -print -quit 2>/dev/null || true)"
+    safe="$(safe_asset "$target")"
+    if [ -n "$FOUND" ]; then
+      cp "$FOUND" "$DIST/assets/$safe"
+      esc_target="$(escape_sed "$target")"
       sed -i "s|!\[\[$esc_target\]\]|![](assets/$safe)|g" "$WORK_MD"
     else
-      # If not found, at least drop the embed syntax
-      esc_target=$(printf '%s\n' "$target" | sed 's/[.[\*^$()+?/{}|]/\\&/g')
+      esc_target="$(escape_sed "$target")"
       sed -i "s|!\[\[$esc_target\]\]|![]($safe)|g" "$WORK_MD"
-      echo "Warning: asset not found in vault: $target" >&2
+      echo "Warning: missing asset '$target' for note '$current'" >&2
     fi
   done
 
-  SRC_MD="$WORK_MD"
-  RESOURCE_ROOTS+=("$TMPDIR" "$VAULT")
-else
-  RESOURCE_ROOTS+=("$VAULT")
-fi
+  # --- Wiki links (non-image): [[Note|Alias]] / [[Note#Heading|Alias]] ---
+  mapfile -t WIKIS < <(grep -oP '(?<!\!)\[\[[^\]]+\]\]' "$src_md_path" 2>/dev/null \
+                       | sed '/^\s*$/d' | sort -u || true)
+  for raw in "${WIKIS[@]:-}"; do
+    [ -n "$raw" ] || continue
+    inner="${raw:2:${#raw}-4}"             # strip [[ ]]
+    [ -n "$inner" ] || continue
 
-# Optional header (local scripts/styles if you want truly single-file)
-HEADER_FILE="./header.html"
-INCLUDE_HEADER_ARGS=()
-if [ -f "$HEADER_FILE" ]; then
-  INCLUDE_HEADER_ARGS=(--include-in-header "$HEADER_FILE")
-fi
+    base_and_frag="${inner%%|*}"
+    alias="${inner#*|}"; [ "$alias" = "$inner" ] && alias="$base_and_frag"
 
-TITLE="$basename_noext"
-RESOURCE_PATH="$(IFS=:; echo "${RESOURCE_ROOTS[*]:-.}")"
+    base="${base_and_frag%%#*}"
+    frag="${base_and_frag#*#}"; [ "$frag" = "$base_and_frag" ] && frag=""
 
-# Build HTML (embed what Pandoc can)
-pandoc \
-  --from=gfm+emoji+wikilinks_title_after_pipe \
-  --to=html5 \
-  --standalone \
-  --embed-resources \
-  --metadata=title:"$TITLE" \
-  --resource-path="$RESOURCE_PATH" \
-  "${INCLUDE_HEADER_ARGS[@]}" \
-  --output="${DIST}/index.html" \
-  "$SRC_MD"
+    # trim whitespace
+    base="$(echo "$base" | sed 's/^ *//; s/ *$//')"
+    alias="$(echo "$alias" | sed 's/^ *//; s/ *$//')"
+    frag="$(echo "$frag" | sed 's/^ *//; s/ *$//')"
 
-# Copy physical assets to dist for non-embedded fallbacks
-if [ "$USED_MODE" = "fallback" ] && [ -d "${ASSETS_TMP:-}" ]; then
-  mkdir -p "$DIST/assets"
-  # Quote the glob to handle zero or many files; use 'shopt -s nullglob' alternative if needed
-  cp -n "$ASSETS_TMP/"* "$DIST/assets/" 2>/dev/null || true
-fi
-if [ "$USED_MODE" = "export" ] && [ -d "$EXPORT_DIR" ]; then
-  mkdir -p "$DIST/assets"
-  rsync -a --include='*/' \
-    --include='*.png' --include='*.jpg' --include='*.jpeg' \
-    --include='*.gif' --include='*.svg' --include='*.webp' \
-    --exclude='*' "$EXPORT_DIR"/ "$DIST/assets/" 2>/dev/null || true
-fi
+    [ -n "$base" ] || continue
+
+    target_md="./${base}.md"
+    base_slug="$(slug "$base")"
+    href=""
+    if [ -f "$target_md" ]; then
+      # enqueue
+      if [ -z "${VISITED[$base]+x}" ]; then
+        QUEUE+=("$base")
+      fi
+      href="${base_slug}.html"
+      [ -n "$frag" ] && href="${href}#$(slug "$frag")"
+    else
+      href="#404-${base_slug}"
+    fi
+
+    esc_raw="$(escape_sed "$raw")"
+    repl="[$alias]($href)"
+    sed -i "s|$esc_raw|$repl|g" "$WORK_MD"
+  done
+
+  # --- Build HTML (entry → index.html, others → <slug>.html) ---
+  page_slug="$(slug "$current")"
+  if [ "$current" = "$entry_name" ]; then
+    out_html="$DIST/index.html"
+  else
+    out_html="$DIST/${page_slug}.html"
+  fi
+
+  build_html "$WORK_MD" "$out_html" "$DIST:$VAULT:$TMPDIR"
+done
 
 # Publish
 surge "$DIST" "$DOMAIN"
