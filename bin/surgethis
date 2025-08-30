@@ -119,12 +119,19 @@ while [ ${#QUEUE[@]} -gt 0 ]; do
     base_slug="$(slug "$base")"
     href=""
     if [ -f "$target_md" ]; then
-      # enqueue
-      if [ -z "${VISITED[$base]+x}" ]; then
-        QUEUE+=("$base")
+      if [ "$base" = "$entry_name" ]; then
+        # Link back to entry page (index). Keep fragment if present.
+        href="./"                     # of "/" als je absolute root wilt
+        [ -n "$frag" ] && href="${href}#$(slug "$frag")"
+        # Do NOT enqueue the entry again
+      else
+        # Normal page: enqueue and link to its own html
+        if [ -z "${VISITED[$base]+x}" ]; then
+          QUEUE+=("$base")
+        fi
+        href="${base_slug}.html"
+        [ -n "$frag" ] && href="${href}#$(slug "$frag")"
       fi
-      href="${base_slug}.html"
-      [ -n "$frag" ] && href="${href}#$(slug "$frag")"
     else
       href="#404-${base_slug}"
     fi
