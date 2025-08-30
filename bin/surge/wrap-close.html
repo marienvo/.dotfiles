@@ -1,86 +1,94 @@
   </main>
 </div>
-  <script>
-		// Build TOC from actual H1/H2/H3 in <main>
-		(function(){
-			// --- utils ---
-			const slug = (s) => s.toLowerCase().trim()
-				.replace(/[^a-z0-9\s-]/g, "")
-				.replace(/\s+/g, "-").replace(/-+/g, "-");
+<script>
+  // Build TOC from actual H1/H2/H3 in <main>
+  (function(){
+    // --- utils ---
+    const slug = (s) => s.toLowerCase().trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-").replace(/-+/g, "-");
 
-			// Ensure every H1/H2/H3 has an id
-			const heads = Array.from(document.querySelectorAll("main h1, main h2, main h3")).map(el => {
-				if (!el.id) el.id = slug(el.textContent || "section");
-				return el;
-			});
+    // Ensure every H1/H2/H3 has an id
+    const heads = Array.from(document.querySelectorAll("main h1, main h2, main h3")).map(el => {
+      if (!el.id) el.id = slug(el.textContent || "section");
+      return el;
+    });
 
-			// Group headings under their parents: H1 -> H2[] -> H3[]
-			const h1s = [];
-			let curH1 = null, curH2 = null;
-			for (const h of heads) {
-				if (h.tagName === "H1") {
-					curH1 = { el: h, h2s: [] }; h1s.push(curH1); curH2 = null;
-				} else if (h.tagName === "H2" && curH1) {
-					curH2 = { el: h, h3s: [] }; curH1.h2s.push(curH2);
-				} else if (h.tagName === "H3" && curH2) {
-					curH2.h3s.push(h);
-				}
-			}
+    // Group headings under their parents: H1 -> H2[] -> H3[]
+    const h1s = [];
+    let curH1 = null, curH2 = null;
+    for (const h of heads) {
+      if (h.tagName === "H1") {
+        curH1 = { el: h, h2s: [] }; h1s.push(curH1); curH2 = null;
+      } else if (h.tagName === "H2" && curH1) {
+        curH2 = { el: h, h3s: [] }; curH1.h2s.push(curH2);
+      } else if (h.tagName === "H3" && curH2) {
+        curH2.h3s.push(h);
+      }
+    }
 
-			// Render TOC: H1 (details.lvl-1) -> H2 (details.lvl-2) -> H3 (links)
-			const toc = document.getElementById("toc");
-			for (const h1 of h1s) {
-				const d1 = document.createElement("details");
-				d1.className = "lvl-1"; d1.open = true;
-				const s1 = document.createElement("summary");
-				const a1 = document.createElement("a");
-				a1.href = "#top";
-				a1.textContent = h1.el.textContent;
-				s1.appendChild(a1); d1.appendChild(s1);
+    // Render TOC: H1 (details.lvl-1) -> H2 (details.lvl-2) -> H3 (links)
+    const toc = document.getElementById("toc");
+    for (const h1 of h1s) {
+      const d1 = document.createElement("details");
+      d1.className = "lvl-1"; d1.open = true;
+      const s1 = document.createElement("summary");
+      const a1 = document.createElement("a");
+      a1.href = "#top";
+      a1.textContent = h1.el.textContent;
+      s1.appendChild(a1); d1.appendChild(s1);
 
-				const ul2 = document.createElement("ul");
-				for (const h2 of h1.h2s) {
-					const li2 = document.createElement("li");
-					const d2 = document.createElement("details"); d2.className = "lvl-2";
-					const s2 = document.createElement("summary");
-					const a2 = document.createElement("a"); a2.href = `#${h2.el.id}`; a2.textContent = h2.el.textContent;
-					s2.appendChild(a2); d2.appendChild(s2);
+      const ul2 = document.createElement("ul");
+      for (const h2 of h1.h2s) {
+        const li2 = document.createElement("li");
+        const d2 = document.createElement("details"); d2.className = "lvl-2";
+        const s2 = document.createElement("summary");
+        const a2 = document.createElement("a"); a2.href = `#${h2.el.id}`; a2.textContent = h2.el.textContent;
+        s2.appendChild(a2); d2.appendChild(s2);
 
-					if (h2.h3s.length) {
-						const ul3 = document.createElement("ul"); ul3.className = "h3-list";
-						for (const h3 of h2.h3s) {
-							const li3 = document.createElement("li");
-							const a3 = document.createElement("a"); a3.href = `#${h3.id}`; a3.textContent = h3.textContent;
-							li3.appendChild(a3); ul3.appendChild(li3);
-						}
-						d2.appendChild(ul3);
-					}
-					li2.appendChild(d2); ul2.appendChild(li2);
-				}
-				d1.appendChild(ul2);
-				const li1 = document.createElement("li"); li1.appendChild(d1); toc.appendChild(li1);
-			}
+        if (h2.h3s.length) {
+          const ul3 = document.createElement("ul"); ul3.className = "h3-list";
+          for (const h3 of h2.h3s) {
+            const li3 = document.createElement("li");
+            const a3 = document.createElement("a"); a3.href = `#${h3.id}`; a3.textContent = h3.textContent;
+            li3.appendChild(a3); ul3.appendChild(li3);
+          }
+          d2.appendChild(ul3);
+        }
+        li2.appendChild(d2); ul2.appendChild(li2);
+      }
+      d1.appendChild(ul2);
+      const li1 = document.createElement("li"); li1.appendChild(d1); toc.appendChild(li1);
+    }
 
-			// Expand all = open every H2 details (so H3’s are visible)
-			const btn = document.getElementById('toggleExpand');
-			btn.addEventListener("click", () => {
-				const groups = document.querySelectorAll("#toc .lvl-2");
-				const anyClosed = Array.from(groups).some(d => !d.open);
+    // Expand all = open every H2 details (so H3’s are visible)
+    const btn = document.getElementById('toggleExpand');
+    const anyH3 = heads.some(h => h.tagName === "H3");
 
-				// if any closed → open all, else → close all
-				groups.forEach(d => d.open = anyClosed);
+    if (!anyH3) {
+      // hide the button if no H3
+      btn.style.display = "none";
+      return; // skip binding
+    }
 
-				// toggle button label
-				btn.textContent = anyClosed ? "Collapse all" : "Expand all";
-			});
+    btn.addEventListener("click", () => {
+      const groups = document.querySelectorAll("#toc .lvl-2");
+      const anyClosed = Array.from(groups).some(d => !d.open);
 
-			// Optional: prevent summary click from toggling when link is used
-			toc.addEventListener("click", (e) => {
-				// If clicking the <a> inside <summary>, don't toggle <details>
-				if (e.target.tagName === "A" && e.target.parentElement.tagName === "SUMMARY") {
-					// allow default (anchor jump), but avoid double-toggle flicker
-					e.target.parentElement.parentElement.open = true;
-				}
-			});
-		})();
-  </script>
+      // if any closed → open all, else → close all
+      groups.forEach(d => d.open = anyClosed);
+
+      // toggle button label
+      btn.textContent = anyClosed ? "Collapse all" : "Expand all";
+    });
+
+    // Optional: prevent summary click from toggling when link is used
+    toc.addEventListener("click", (e) => {
+      // If clicking the <a> inside <summary>, don't toggle <details>
+      if (e.target.tagName === "A" && e.target.parentElement.tagName === "SUMMARY") {
+        // allow default (anchor jump), but avoid double-toggle flicker
+        e.target.parentElement.parentElement.open = true;
+      }
+    });
+  })();
+</script>
