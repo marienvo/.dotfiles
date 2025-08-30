@@ -1,0 +1,49 @@
+<!-- Mermaid (renders ```mermaid code fences) -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true });</script>
+
+<style>
+    /* Kill Pandoc's narrow body; center and widen content */
+    :root { --max: 960px; --pad: clamp(16px, 4vw, 40px); }
+
+    /* Override defaults from Pandoc's built-in stylesheet */
+    body {
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        color: #1f2937;
+        background: rgb(249, 250, 251) !important;
+        font: 16px/1.65 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    /* Centered readable column */
+    main, .page, body > *:not(style):not(script):not(header) {
+        box-sizing: border-box;
+        max-width: var(--max);
+        margin: 0 auto !important;
+        padding: 80px var(--pad) 180px var(--pad);
+    }
+    @media (max-width: 1024px) {
+        main, .page, body > *:not(style):not(script):not(header) {
+            padding: 40px var(--pad) 90px var(--pad);
+        }
+    }
+    @media (max-width: 730px) {
+        main, .page, body > *:not(style):not(script):not(header) {
+            padding: 20px var(--pad) 45px var(--pad);
+        }
+    }
+
+    /* Elements */
+    img { max-width: 100%; height: auto; }
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { padding: .8rem; border: 1px solid #e5e7eb; border-radius: 8px; overflow: auto; background: #fafafa; }
+    hr { border: 0; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
+    blockquote { border-left: 4px solid #e5e7eb; margin: 1rem 0; padding: .5rem 1rem; color: #6b7280; background: #fafafa; }
+
+    /* Headings & lists spacing */
+    h1,h2,h3 { line-height: 1.25; }
+    h1 { margin: 0 0 1rem; }
+    h2,h3 { margin: 2rem 0 1rem; }
+    ul,ol { padding-left: 1.4rem; margin: .75rem 0 1rem; }
+</style>

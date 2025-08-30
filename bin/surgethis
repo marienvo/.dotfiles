@@ -3,7 +3,7 @@ set -euo pipefail
 
 SALT="mysalt123"
 DIST="./dist-share-note"
-HEADER_FILE="/home/marienvanoverbeek/Notes/Scripts/assets/header.html"
+HEADER_FILE="/home/marienvanoverbeek/.dotfiles/bin/surge/header.html"
 
 rm -rf "$DIST"
 mkdir -p "$DIST/assets"
@@ -72,6 +72,8 @@ build_html () {
     --to=html5 \
     --standalone \
     --embed-resources \
+    --include-before-body=/home/marienvanoverbeek/.dotfiles/bin/surge/wrap-open.html \
+    --include-after-body=/home/marienvanoverbeek/.dotfiles/bin/surge/wrap-close.html \
     --metadata=pagetitle:"$page_title" \
     --resource-path="$respath" \
     "${include_args[@]}" \
