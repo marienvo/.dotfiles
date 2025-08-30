@@ -33,7 +33,9 @@
 				const d1 = document.createElement("details");
 				d1.className = "lvl-1"; d1.open = true;
 				const s1 = document.createElement("summary");
-				const a1 = document.createElement("a"); a1.href = `#${h1.el.id}`; a1.textContent = h1.el.textContent;
+				const a1 = document.createElement("a");
+				a1.href = "#top";
+				a1.textContent = h1.el.textContent;
 				s1.appendChild(a1); d1.appendChild(s1);
 
 				const ul2 = document.createElement("ul");
