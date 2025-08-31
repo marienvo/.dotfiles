@@ -67,7 +67,7 @@ build_html () {
   page_title="$(first_h1 "$src_md")"
   [ -z "$page_title" ] && page_title="$DOMAIN"
 
-  pandoc \
+  env DOMAIN="$DOMAIN" pandoc \
     --from=gfm+emoji+wikilinks_title_after_pipe+hard_line_breaks \
     --to=html5 \
     --standalone \
@@ -76,6 +76,7 @@ build_html () {
     --include-after-body=/home/marienvanoverbeek/.dotfiles/bin/surge/wrap-close.html \
     --metadata=pagetitle:"$page_title" \
     --resource-path="$respath" \
+    --lua-filter="$LUA_FILTER" \
     "${include_args[@]}" \
     --output="$out_html" \
     "$src_md"
@@ -85,6 +86,36 @@ build_html () {
 mkdir -p "$DIST/assets"
 VAULT="$(pwd)"
 TMPROOT="$(mktemp -d)"
+
+LUA_FILTER="$TMPROOT/extern.lua"
+cat > "$LUA_FILTER" <<'LUA'
+-- Open external links in new tab; keep same-domain/relative links as-is.
+local function is_external(url, domain)
+  if not url then return false end
+  if url:match("^https?://") or url:match("^//") then
+    if domain and #domain > 0 then
+      local esc = domain:gsub("%%","%%%%"):gsub("%.","%%."):gsub("%-","%%-")
+      if url:match("^https?://[^/]*" .. esc .. "(/.*)?$") or url:match("^//[^/]*" .. esc .. "(/.*)?$") then
+        return false
+      end
+    end
+    return true
+  end
+  return false
+end
+
+function Link(el)
+  local domain = os.getenv("DOMAIN") or ""
+  if is_external(el.target, domain) then
+    el.attributes.target = "_blank"
+    local rel = (el.attributes.rel or "")
+    if not rel:match("noopener")   then rel = rel .. " noopener"   end
+    if not rel:match("noreferrer") then rel = rel .. " noreferrer" end
+    el.attributes.rel = (rel:gsub("^%s*(.-)%s*$", "%1"))
+  end
+  return el
+end
+LUA
 
 entry_name="$(note_basename "$ENTRY")"
 entry_slug="$(slug "$entry_name")"
