@@ -1,11 +1,12 @@
 <!-- Mermaid (renders ```mermaid code fences) -->
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true });</script>
-<!--<link rel="stylesheet" href="styles.css">-->
 <style>
-    /* Kill Pandoc's narrow body; center and widen content */
+    /* =========================
+       Base & Theme Variables
+       ========================= */
     :root {
-        --max: 960px;
+        --max: 720px;
         --pad: clamp(16px, 4vw, 40px);
         --toc-w: 280px;
         --accent: #111827; /* slate-900-ish */
@@ -13,197 +14,167 @@
         --br: 10px;
     }
 
+    /* Smooth scroll for TOC anchors */
     html { scroll-behavior: smooth; }
 
-    /* Override defaults from Pandoc's built-in stylesheet */
+    /* =========================
+       Document Reset & Typography
+       (override Pandoc defaults)
+       ========================= */
     body {
         max-width: none !important;
-        padding: 0 !important;
         margin: 0 !important;
-        color: rgb(75 85 99);;
+        padding: 0 !important;
+        color: rgb(75 85 99);
         background: rgb(249, 250, 251) !important;
-        font: 16px/1.65 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Centered readable column */
-    .page {
-        box-sizing: border-box;
-        max-width: var(--max);
-        margin: 0 auto !important;
-        padding: 80px var(--pad) 180px var(--pad);
-    }
-    aside {
-        padding: 80px 0 10px 0;
-    }
-    @media (max-width: 1024px) {
-        .page {
-            padding: 40px var(--pad) 90px var(--pad);
-        }
-      aside {
-          padding: 40px 0 10px 0
-      }
-    }
-    @media (max-width: 730px) {
-        .page {
-            padding: 20px var(--pad) 45px var(--pad);
-        }
-      aside {
-          padding: 20px 0 10px 0
-      }
-    }
-
-
-
-
-    :root {
-        --muted: #6b7280;
-    }
-
-    /* ====== Layout ====== */
+    /* =========================
+       Page & Aside Layout
+       ========================= */
     .wrap {
         display: grid;
-        grid-template-columns: 320px 1fr;
+        grid-template-columns: 200px minmax(0, var(--max)) 200px;
         gap: 24px;
-        max-width: 1200px;
+        max-width: calc(var(--max) + 400px + 48px); /* 2 asides + gaps + page */
         margin: 0 auto;
     }
 
     aside {
+        grid-column: 1;
+    }
+
+    /* fake right aside */
+    .wrap::after {
+        content: "";
+        grid-column: 3;
+    }
+
+    .page {
+        grid-column: 2;
+        box-sizing: border-box;
+        padding: 80px var(--pad) 180px var(--pad);
+    }
+
+    /* responsive: below 730px only page remains */
+    @media (max-width: 730px) {
+        .wrap {
+            grid-template-columns: 1fr;
+            max-width: none;
+        }
+
+        aside,
+        .wrap::after {
+            display: none;
+        }
+
+        .page {
+            grid-column: 1;
+            padding: 20px var(--pad) 45px var(--pad);
+        }
+    }
+
+
+    aside {
+        /* Sticky TOC on large screens */
         position: sticky;
         top: 12px;
         align-self: start;
+        padding: 80px 0 10px 0;
         background: transparent;
         color: #000;
     }
 
-    @media (max-width: 1024px) {
-        .wrap {
-            grid-template-columns: 1fr;
-        }
-        aside {
-            position: static;
-        }
-    }
-
-    /* ====== Title ====== */
+    /* =========================
+       TOC: Title
+       ========================= */
     .toc-title {
-        /* Typography */
         font-weight: 700;
         font-size: 14px;
-
-        /* Spacing */
         margin: 0 0 6px 0;
         padding-left: 0;
-
-        /* Truncation */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    /* ====== Lists ====== */
+    /* =========================
+       TOC: Lists & Levels
+       ========================= */
     #toc,
     #toc ul {
-        /* Remove default list styling */
         list-style: none;
         margin: 0;
         padding: 0;
     }
 
-    .lvl1 {
-        margin: 6px 0;
-    }
+    .lvl1 { margin: 6px 0; }
 
     .lvl1 > a {
-        /* Typography */
+        display: block;
+        padding: 2px 0;
         font-weight: 700;
         color: inherit;
         text-decoration: none;
-
-        /* Box */
-        display: block;
-        padding: 2px 0;
-
-        /* Truncation */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    /* H2 rows are clickable summaries; start collapsed (no h3 visible) */
-    details.toc-h2 {
-        margin: 0;
-    }
+    /* H2 rows are clickable summaries */
+    details.toc-h2 { margin: 0; }
 
     details.toc-h2 > summary {
-        /* Remove default bullet/marker spacing */
+        /* Remove default marker spacing */
         list-style: none;
-
-        /* Interactions */
         cursor: pointer;
-        outline: none;
-
-        /* Indent */
+        outline: none; /* keep focus visible below */
         padding: 2px 0 2px 16px;
     }
 
     details.toc-h2 > summary a {
-        /* Links inside summary should look like text but be clickable */
         display: inline-block;
         max-width: 100%;
         color: inherit;
         text-decoration: none;
-
-        /* Truncation */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-
-    /* Shared link base + vertical guide line */
+    /* =========================
+       TOC: Link styling + guide
+       ========================= */
     .lvl-1 a,
     .lvl-2 a,
     .h3-list a {
-        width: 150px;
+        position: relative;           /* for the left guide line */
         display: block;
-        text-decoration: none;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        position: relative; /* Needed for the left guide line */
-    }
-    .lvl-1 a.active,
-    .lvl-2 a.active,
-    .h3-list a.active {
-        color: #000;
-    }
-    .lvl-1 a,
-    .lvl-2 a,
-    .h3-list a,
-    .helpers a,
-    .helpers button.linky {
+        width: 150px;
         padding: 2px 0 2px 20px;
         color: var(--muted);
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
+
+    .lvl-2 a { padding-left: 30px; }
+    .h3-list a { padding-left: 40px; }
+
+    .lvl-1 a.active,
+    .lvl-2 a.active,
+    .h3-list a.active { color: #000; }
+
     .lvl-1 a:hover,
     .lvl-2 a:hover,
-    .h3-list a:hover,
-    .helpers a:hover,
-    .helpers button.linky:hover {
-        color: #000;
-    }
-    .lvl-2 a {
-        padding: 2px 0 2px 30px;
-    }
-    .h3-list a {
-        padding: 2px 0 2px 40px;
-    }
+    .h3-list a:hover { color: #000; }
 
     .lvl-1 a:hover::before,
     .lvl-2 a:hover::before,
     .h3-list a:hover::before {
-        /* Vertical guide line on the left */
+        /* Vertical guide line on hover */
         content: "";
         position: absolute;
         left: 0;
@@ -212,10 +183,11 @@
         transform: translateX(10px);
         width: 2px;
         background: #111;
-        color: #000;
     }
 
-    /* ====== Helpers (links styled as text) ====== */
+    /* =========================
+       TOC: Helpers (links-as-buttons)
+       ========================= */
     .helpers {
         display: grid;
         gap: 4px;
@@ -225,28 +197,27 @@
 
     .helpers a,
     .helpers button.linky {
-        /* Reset button styles to look like links */
+        /* Make button look like a link */
         appearance: none;
         border: 0;
         background: none;
         text-align: left;
-
-        /* Typography/interaction */
         cursor: pointer;
         text-decoration: none;
-
-        /* Ensure consistent text rendering */
-        font-family: sans-serif;
+        font-family: inherit;
+        color: var(--muted);
+        padding: 2px 0 2px 20px;
     }
 
-    /* ====== Summary marker + focus ====== */
-    /* Hide default disclosure marker on <summary> */
-    #toc summary::-webkit-details-marker {
-        display: none;
-    }
-    #toc summary::marker {
-        content: "";
-    }
+    .helpers a:hover,
+    .helpers button.linky:hover { color: #000; }
+
+    /* =========================
+       TOC: Summary marker & focus
+       ========================= */
+    /* Hide default disclosure marker */
+    #toc summary::-webkit-details-marker { display: none; }
+    #toc summary::marker { content: ""; }
 
     /* Keep keyboard focus visible */
     #toc summary:focus-visible {
@@ -254,7 +225,7 @@
         outline-offset: 2px;
     }
 
-    /* ====== Consistent TOC typography ====== */
+    /* Consistent TOC typography */
     #toc,
     #toc a,
     #toc summary {
@@ -262,27 +233,71 @@
         line-height: 16px;
     }
 
-
-
-
-
-    /* Elements */
-    img { max-width: 100%; height: auto; }
-    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    pre { padding: .8rem; border: 1px solid #e5e7eb; border-radius: 8px; overflow: auto; background: #fafafa; }
-    hr { border: 0; border-top: 1px solid #e5e7eb; background-color:transparent; margin: 2rem 0; }
-    blockquote { border-left: 4px solid #e5e7eb; margin: 1rem 0; padding: .5rem 1rem; color: #6b7280; background: #fafafa; }
-
-    /* Headings & lists spacing */
-    h1,h2,h3 { line-height: 1.25; }
-    h1,h2 { color: rgb(230 64 64);}
-    h2, h3 {
-        /*font-size: 1.125rem; line-height: 1.75rem;*/
+    /* =========================
+       Content Elements
+       ========================= */
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: var(--br);
     }
-     h3 {
-        font-size: 1.125rem; line-height: 1.75rem;
+
+    pre,
+    code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
+
+    pre {
+        padding: .8rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: auto;
+        background: #fafafa;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid #e5e7eb;
+        background-color: transparent;
+        margin: 2rem 0;
+    }
+
+    blockquote {
+        border-left: 4px solid #e5e7eb;
+        margin: 1rem 0;
+        padding: .5rem 1rem;
+        color: #6b7280;
+        background: #fafafa;
+    }
+
+    /* Headings & Lists spacing */
+    h1, h2, h3 { line-height: 1.25; }
+    h1, h2 { color: rgb(230 64 64); }
+    h3 { font-size: 1.125rem; line-height: 1.75rem; }
+
     h1 { margin: 0 0 1rem; }
-    h2,h3 { margin: 2rem 0 1rem; }
-    ul,ol { padding-left: 1.4rem; margin: .75rem 0 1rem; }
+    h2, h3 { margin: 2rem 0 1rem; }
+
+    ul, ol {
+        padding-left: 1.4rem;
+        margin: .75rem 0 1rem;
+    }
+
+    /* =========================
+       Responsive
+       ========================= */
+    @media (max-width: 1024px) {
+        .page { padding: 40px var(--pad) 90px var(--pad); }
+        .wrap { grid-template-columns: 1fr; }
+        aside {
+            position: static;
+            padding: 40px 0 10px 0;
+        }
+    }
+
+    @media (max-width: 730px) {
+        .page { padding: 20px var(--pad) 45px var(--pad); }
+        aside { padding: 20px 0 10px 0; }
+    }
+
 </style>
