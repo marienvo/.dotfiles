@@ -71,7 +71,6 @@ build_html () {
     --from=gfm+emoji+wikilinks_title_after_pipe+hard_line_breaks \
     --to=html5 \
     --standalone \
-    --embed-resources \
     --include-before-body=/home/marienvanoverbeek/.dotfiles/bin/surge/wrap-open.html \
     --include-after-body=/home/marienvanoverbeek/.dotfiles/bin/surge/wrap-close.html \
     --metadata=pagetitle:"$page_title" \
