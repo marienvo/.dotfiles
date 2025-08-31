@@ -41,11 +41,18 @@
         margin: 0 auto;
     }
 
+    .disclaimer {
+        padding: 12px 8px;
+        grid-column: 2;
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 16px;
+    }
+
     aside {
         grid-column: 1;
     }
-    /* Keeps layout space so the page doesn't reflow when aside appears */
-    aside.toc-hidden { visibility: hidden; pointer-events: none; }
 
     /* fake right aside */
     .wrap::after {
@@ -288,6 +295,13 @@
     /* =========================
        Responsive
        ========================= */
+    @media (min-width: 1025px) {
+        aside.toc-hidden {
+            visibility: hidden;
+            pointer-events: none;
+        }
+    }
+
     @media (max-width: 1024px) {
         .page { padding: 40px var(--pad) 90px var(--pad); }
         .wrap { grid-template-columns: 1fr; }
@@ -298,8 +312,13 @@
     }
 
     @media (max-width: 730px) {
-        .page { padding: 20px var(--pad) 45px var(--pad); }
-        aside { padding: 20px 0 10px 0; }
+        .page {
+            padding: 20px var(--pad) 45px var(--pad);
+            grid-column: 1 / span 2;
+        }
+        .disclaimer {
+            grid-column: 1 / span 2;
+        }
     }
 
 </style>
