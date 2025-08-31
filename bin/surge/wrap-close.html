@@ -97,11 +97,31 @@
       }
     });
 
+		// ---- Aside visibility control (show after first H2 becomes active) ----
+		const asideEl = document.querySelector("aside");
+    // Hide aside initially (keeps layout space; no jump)
+		if (asideEl) {
+			asideEl.classList.add("toc-hidden");
+			asideEl.setAttribute("aria-hidden", "true");
+		}
+
+		const firstH2 = heads.find(h => h.tagName === "H2") || null;
+		let asideShownOnce = false;
+
+		function maybeShowAsideOn(el) {
+			// Only trigger once: when the *first H2* becomes the active heading
+			if (!asideShownOnce && firstH2 && el === firstH2 && asideEl) {
+				asideEl.classList.remove("toc-hidden");
+				asideEl.removeAttribute("aria-hidden");
+				asideShownOnce = true; // lock it; never hide again
+			}
+		}
+
 		// ===== Active heading tracking (H1 + H2 + H3) =====
 		const TOP_THRESHOLD = 8; // px; set to fixed header height if you have one
 		let ticking = false;
 
-// Keep arrays handy
+    // Keep arrays handy
 		const trackedElems = Array.from(headingToAnchor.keys());   // H1/H2/H3 in DOM order
 		const trackedAnchors = Array.from(headingToAnchor.values());
 
@@ -159,8 +179,12 @@
 					const top = el.getBoundingClientRect().top;
 					if (top <= TOP_THRESHOLD) current = el; else break;
 				}
-				if (current) setActiveFor(current);
-				else clearActive();
+				if (current) {
+					maybeShowAsideOn(current);
+					setActiveFor(current);
+				} else {
+					clearActive();
+				}
 			});
 		}
 

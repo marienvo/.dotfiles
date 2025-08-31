@@ -44,6 +44,8 @@
     aside {
         grid-column: 1;
     }
+    /* Keeps layout space so the page doesn't reflow when aside appears */
+    aside.toc-hidden { visibility: hidden; pointer-events: none; }
 
     /* fake right aside */
     .wrap::after {
