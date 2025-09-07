@@ -39,6 +39,10 @@ ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 #ln -s ~/.dotfiles/.taskrc ~/.taskrc
 #ln -s ~/.dotfiles/.ideavimrc ~/.ideavimrc
 
+
+rm ~/.XCompose
+ln -s ~/.dotfiles/.XCompose ~/.XCompose
+
 #mkdir ~/.config/nvim
 #ln -s ~/.dotfiles/init.vim ~/.config/nvim/init.vim
 
