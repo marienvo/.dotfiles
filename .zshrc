@@ -5,6 +5,8 @@ export ZSH_THEME="spaceship"
 export SPACESHIP_BATTERY_SHOW="false"
 export plugins=(git)
 
+setopt HIST_IGNORE_SPACE # makes sure lines starting with space are not added to history (useful if commands contain PROD secrets)
+
 function pci {
     sudo dnf update
     sudo ufw enable && sudo freshclam
