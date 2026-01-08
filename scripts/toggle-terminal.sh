@@ -1,6 +1,18 @@
 #!/bin/bash
 
-kitty --single-instance --class=TMToggle bash -lc "tmux attach || tmux new -s main"
+
+if ! pgrep -x guake >/dev/null; then
+  guake &
+  sleep 0.5
+  guake -e "tmux attach || tmux new -s main"
+else
+  # Guake already running
+  :
+fi
+
+guake-toggle
+
+#kitty --single-instance --class=TMToggle bash -lc "tmux attach || tmux new -s main"
 
 #######################################################################################################
 ## This script will toggle minimize/activate first window with specified class
