@@ -1,22 +1,6 @@
 #!/bin/bash
-# Remove existing files
-#rm ~/.taskrc
-#rm ~/.ideavimrc
-#rm -rf ~/.config/nvim
-
-# Create symlinks
-mkdir ~/.config/alacritty
-rm ~/.config/alacritty/alacritty.toml
-ln -s ~/.dotfiles/alacritty.toml ~/.config/alacritty/alacritty.toml
-
-rm ~/.local/share/applications/marathon.desktop
-ln -s ~/.dotfiles/marathon.desktop ~/.local/share/applications/marathon.desktop
-
-mkdir ~/.config/newsboat
-rm ~/.config/newsboat/config
-ln -s ~/.dotfiles/newsboat/config ~/.config/newsboat/config
-rm ~/.config/newsboat/urls
-ln -s ~/.dotfiles/newsboat/urls ~/.config/newsboat/urls
+rm ~/.config/kitty/kitty.conf
+ln -s ~/.dotfiles/kitty.conf ~/.config/kitty/kitty.conf
 
 mkdir ~/.todo
 rm ~/.todo/config

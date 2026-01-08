@@ -30,4 +30,4 @@
 #         xdotool windowactivate ${NEEDED_WINDOW_WINDOW_ID_DEC}
 #     # fi
 # fi
-flameshot gui
+flatpak run be.alexandervanhee.gradia --screenshot=INTERACTIVE
