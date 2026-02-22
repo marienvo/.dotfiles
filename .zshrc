@@ -212,8 +212,9 @@ SPACESHIP_PROMPT_ORDER=(
   char           # Prompt character
 )
 
+# Do not auto-start tmux inside JetBrains/WebStorm terminal
 if command -v tmux >/dev/null 2>&1; then
-  if [ -z "$TMUX" ]; then
+  if [ -z "$TMUX" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
     tmux attach -t main || tmux new -s main
   fi
 fi
