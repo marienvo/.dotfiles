@@ -31,6 +31,40 @@
   - in that add this:
   - `@reboot ln -sf /home/marienvanoverbeek/.dotfiles/assets/md.obsidian.Obsidian.png /var/lib/flatpak/app/md.obsidian.Obsidian/current/active/export/share/icons/hicolor/512x512/apps/md.obsidian.Obsidian.png`
 
+## Notes push
+
+Job for shutdown to always push committed notes:
+
+```bash
+mkdir -p ~/.config/systemd/user
+nano ~/.config/systemd/user/git-push-notes.service
+```
+
+Content:
+
+```ini
+[Unit]
+Description=Push Notes repo on shutdown
+DefaultDependencies=no
+Before=shutdown.target reboot.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/marienvanoverbeek/.dotfiles/bin/pushnotes
+TimeoutStartSec=30
+
+[Install]
+WantedBy=shutdown.target reboot.target
+```
+
+Activate:
+
+```
+systemctl --user daemon-reload
+systemctl --user enable git-push-notes.service
+```
+
+
 ## Run installer
 
 - Run `./install.sh` to create symlinks
