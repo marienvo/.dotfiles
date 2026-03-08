@@ -27,6 +27,10 @@ ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 rm ~/.XCompose
 ln -s ~/.dotfiles/.XCompose ~/.XCompose
 
+mkdir -p ~/.ssh
+rm ~/.ssh/config
+ln -s ~/.dotfiles/ssh-config ~/.ssh/config
+
 #mkdir ~/.config/nvim
 #ln -s ~/.dotfiles/init.vim ~/.config/nvim/init.vim
 

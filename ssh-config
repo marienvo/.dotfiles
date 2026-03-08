@@ -1,0 +1,7 @@
+Host inkplate-server
+    HostName 192.168.2.6
+    User marienvanoverbeek
+
+Host macmini
+    HostName 192.168.2.7
+    User marienvanoverbeek
